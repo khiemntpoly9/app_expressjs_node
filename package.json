@@ -1,19 +1,29 @@
 {
-  "name": "asm_nodejs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/trungkhiem1412z/asm_nodejs.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/trungkhiem1412z/asm_nodejs/issues"
-  },
-  "homepage": "https://github.com/trungkhiem1412z/asm_nodejs#readme"
+	"name": "lab1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"watch": "node-sass --watch source/scss --output public/css",
+		"dev": "nodemon --inspect server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.20.1",
+		"dotenv": "^16.0.3",
+		"ejs": "^3.1.8",
+		"express": "^4.18.2",
+		"express-ejs-layouts": "^2.5.1",
+		"formidable": "^2.0.1",
+		"mongoose": "^6.7.0",
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"bootstrap": "^5.2.2",
+		"morgan": "^1.10.0",
+		"node-sass": "^7.0.3",
+		"nodemon": "^2.0.20"
+	}
 }

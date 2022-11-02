@@ -1,0 +1,33 @@
+<%- include('partials/header.html') -%>
+
+<%- include('partials/navbar.html') -%>
+<h3 class="mt-3 ms-3">Shop</h3>
+<!-- Show -->
+<div class="product row row-cols-4 g-4 m-0">
+  <% for (let [index, product] of products.entries()) { %>
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        <h4 style="height: 45px" class="product__title">
+          <a class="product_title" href="/shop/<%= index %>">
+            <%= product.title %>
+          </a>
+        </h4>
+      </div>
+      <div class="card-body">
+        <img style="height: 250px" class="img-fluid img-thumbnail" src="images/<%= product.imageURL %>" alt="A Book" />
+        <h5>
+          <%= product.price %> VNĐ
+        </h5>
+        <p class="product__description">
+          <%=product.description %>
+        </p>
+      </div>
+      <div class="card-footer text-muted">
+        <button class="btn">Chọn</button>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+<%- include('partials/footer.html') -%>
