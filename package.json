@@ -25,10 +25,12 @@
 		"mysql2": "^2.3.3"
 	},
 	"devDependencies": {
+		"autoprefixer": "^10.4.13",
 		"bootstrap": "^5.2.2",
 		"css-loader": "^6.7.1",
 		"morgan": "^1.10.0",
 		"nodemon": "^2.0.20",
+		"postcss-loader": "^7.0.1",
 		"sass": "^1.56.0",
 		"sass-loader": "^13.1.0",
 		"style-loader": "^3.3.1",
