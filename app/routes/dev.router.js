@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-// Gọi Controller Site
-const devTest = require('../controllers/dev.controller');
-
-router.get('/', devTest.index);
+router.get('/', (req, res) => {
+	res.render('dev', { title: 'Dev' });
+});
 
 module.exports = router;
