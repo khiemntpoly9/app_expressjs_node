@@ -9,7 +9,7 @@ let initwebRoutes = (app) => {
 	// Category
 	app.use('/cat', (req, res) => {
 		const id = req.query.id;
-		res.render('home', { title: 'Home' });
+		res.render('index', { title: 'Home' });
 	});
 	// Home
 	app.use('/', siteRouter);

@@ -3,11 +3,10 @@ const path = require('path');
 
 let configViewEngine = (app) => {
 	app.engine('.html', require('ejs').__express);
-	app.use(express.static(path.join(__dirname, '../../public')));
 	app.use(express.static(path.join(__dirname, '../../public/css')));
-	app.use(express.static(path.join(__dirname, '../../dist/js')));
+	app.use(express.static(path.join(__dirname, '../../public/dist/js')));
 	app.use(express.static(path.join(__dirname, '../../public/images')));
-	app.set('views', path.join(__dirname, '../views'));
+	app.set('views', path.join(__dirname, '../../public'));
 
 	// Templating Engine
 	app.set('view engine', 'html');
