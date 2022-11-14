@@ -6,7 +6,7 @@ let configViewEngine = (app) => {
 	app.use(express.static(path.join(__dirname, '../../public/css')));
 	app.use(express.static(path.join(__dirname, '../../public/dist/js')));
 	app.use(express.static(path.join(__dirname, '../../public/images')));
-	app.set('views', path.join(__dirname, '../../public'));
+	app.set('views', [path.join(__dirname, '../../public'), path.join(__dirname, '../../public/admin')]);
 
 	// Templating Engine
 	app.set('view engine', 'html');

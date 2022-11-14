@@ -1,0 +1,56 @@
+<%- include('partials/header-admin.html') -%>
+<%- include('partials/navbar-admin.html') -%>
+<div class="content">
+  Edit sản phẩm
+  <div id="time_show">
+    <!-- show -->
+  </div>
+  <div class="book_info">
+    <form id="form">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Tên Sách</label>
+        <input type="text" class="form-control shadow-none" placeholder="Tên sách" id="tenSach">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Mô tả</label>
+        <textarea class="form-control shadow-none" rows="3" id="moTa"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Giá</label>
+        <input type="number" class="form-control shadow-none" placeholder="Giá" id="gia">
+      </div>
+      <label for="exampleDataList" class="form-label">Loại sách</label>
+      <input class="form-control shadow-none" list="datalistOptions" placeholder="Nhập loại ..." id="idLoai">
+      <datalist id="datalistOptions">
+        <option value="Lịch sử">
+        <option value="Văn học">
+        <option value="Nghệ thuật sống">
+        <option value="Đời sống">
+        <option value="Thiếu nhi">
+      </datalist>
+      <div class="mb-3">
+        <div id="thumbnail">
+          <!-- Show thumbnail -->
+        </div>
+        <label for="formFile" class="form-label">Thay đổi ảnh</label>
+        <input class="form-control shadow-none" type="file" id="urlHinh" name="urlHinh">
+      </div>
+      <div class="mb-3 form-check">
+        <input class="form-check-input shadow-none" type="checkbox" value="1" checked id="anHien">
+        <label class="form-check-label" for="flexCheckChecked">
+          Hiện sách
+        </label>
+      </div>
+      <div class="mb-3">
+        <button id="editbook" type="submit" class="btn btn-warning">Sửa thông tin</button>
+        <div id="deletebook" class="btn btn-warning">Xoá sản phẩm</div>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('partials/footer-admin.html') -%>
+</body>
+<!-- JS -->
+<script src="/admin-edit.js"></script>
+
+</html>

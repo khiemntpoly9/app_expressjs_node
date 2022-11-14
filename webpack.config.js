@@ -1,11 +1,15 @@
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
-	entry: './source/js/app.js',
+	mode: 'production',
+	entry: {
+		app: './source/js/app.js',
+	},
+	devtool: 'inline-source-map',
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, './public/dist/js'),
+		clean: false,
 	},
 	module: {
 		rules: [
@@ -36,6 +40,11 @@ module.exports = {
 			},
 		],
 	},
+	// optimization: {
+	// 	splitChunks: {
+	// 		chunks: 'all',
+	// 	},
+	// },
 	devServer: {
 		static: {
 			directory: path.join(__dirname, 'public'),
@@ -43,6 +52,6 @@ module.exports = {
 		compress: true,
 		port: 5050,
 	},
-	stats: 'errors-only',
-	watch: true,
+	// stats: 'errors-only',
+	// watch: true,
 };

@@ -1,16 +1,15 @@
 const apiApp = require('./api.router');
 const siteRouter = require('./site.router');
-const devTest = require('./dev.router');
+const sachList = require('./sach.router');
+const admin = require('./admin.router');
 
 let initwebRoutes = (app) => {
 	// Api
 	app.use('/api', apiApp);
-	app.use('/dev', devTest);
 	// Category
-	app.use('/cat', (req, res) => {
-		const id = req.query.id;
-		res.render('index', { title: 'Home' });
-	});
+	app.use('/sach', sachList);
+	// Admin
+	app.use('/admin', admin);
 	// Home
 	app.use('/', siteRouter);
 	// Page 404
