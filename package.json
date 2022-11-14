@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/trungkhiem1412z/lab_nodejs.git"
+		"url": "https://github.com/trungkhiem1412z/asm_nodejs.git"
 	},
 	"scripts": {
 		"start": "node server.js",
