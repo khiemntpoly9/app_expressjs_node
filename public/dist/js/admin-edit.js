@@ -30,10 +30,10 @@ form.addEventListener('submit', (item) => {
 			headers: { 'Content-Type': 'multipart/form-data' },
 		})
 		.then(function (res) {
-			console.log('Thành công!');
+			console.log('Sửa thành công!');
 		})
 		.catch(function (err) {
-			console.log('Thất bại!');
+			console.log('Sửa thất bại!');
 		});
 });
 

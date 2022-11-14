@@ -44,7 +44,7 @@ router.put('/book/:idBook', upload.single('urlHinh'), (req, res) => {
 	const bookId = req.params.idBook;
 	const data = req.body;
 	const urlHinhi = req.file.filename;
-	Book.get_book_id(bookId, (data) => {
+	Book.update_book(bookId, data, urlHinhi, (data) => {
 		res.send({ result: data });
 	});
 });

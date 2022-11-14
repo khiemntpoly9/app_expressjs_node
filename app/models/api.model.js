@@ -53,14 +53,47 @@ const get_category_id = (cateId, result) => {
 // Thêm sản phẩm
 const add_book = (newData, urlImages, result) => {
 	let sql = `INSERT INTO sach (tenSach, moTa, urlHinh, gia, idLoai, anHien) VALUES (?, ?, ?, ?, ?, ?)`;
-	const datas = [newData.tenSach, newData.moTa, urlImages, newData.gia, newData.idLoai, newData.anHien];
-	db.query(sql, datas, (err) => {
+	const data = [newData.tenSach, newData.moTa, urlImages, newData.gia, newData.idLoai, newData.anHien];
+	db.query(sql, data, (err) => {
 		if (!err) {
 			result({ ...newData });
 			console.log('Trạng thái: Thêm thành công!');
 		} else {
 			result(err, null);
 			console.log('Trạng thái: Thêm thất bại!');
+			return;
+		}
+	});
+};
+
+// Chỉnh sửa sản phẩm
+const update_book = (bookId, newData, urlImages, result) => {
+	// Xoá hình trước
+	// Lấy name images
+	let getImageDelete = `SELECT urlHinh FROM sach WHERE id=?`;
+	db.query(getImageDelete, bookId, (err, result) => {
+		if (!err) {
+			// xoá file
+			// Truyền vào đường dẫn + name file
+			const data = { ...result };
+			const nameImges = data['0'].urlHinh;
+			// Đường dẫn thư mục file
+			const pathdelete = path.join(__dirname, '../../public/images');
+			fs.unlinkSync(`${pathdelete}/${nameImges}`);
+			console.log('Trạng thái: Xoá file thành công!');
+		} else {
+			console.log('Trạng thái: Xoá file thất bại!');
+		}
+	});
+	let sql = `UPDATE sach SET tenSach = ?, moTa = ?, urlHinh = ?, gia = ?, idLoai = ?, anHien = ? WHERE id=?`;
+	const data = [newData.tenSach, newData.moTa, urlImages, newData.gia, newData.idLoai, newData.anHien, bookId];
+	db.query(sql, data, (err) => {
+		if (!err) {
+			result({ ...newData });
+			console.log('Trạng thái: Sửa thành công!');
+		} else {
+			result(err, null);
+			console.log('Trạng thái: Sửa thất bại!');
 			return;
 		}
 	});
@@ -96,4 +129,4 @@ const delete_book = (idBook) => {
 	});
 };
 
-module.exports = { get_category, get_all_book, get_category_id, get_book_id, add_book, delete_book };
+module.exports = { get_category, get_all_book, get_category_id, get_book_id, add_book, update_book, delete_book };

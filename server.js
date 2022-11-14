@@ -14,7 +14,7 @@ viewEngine(app);
 
 // Http Logger
 // Cần dùng dòng này check log
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
