@@ -1,7 +1,6 @@
 <%- include('partials/header-admin.html') -%>
 <%- include('partials/navbar-admin.html') -%>
-<div class="content">
-  Edit sản phẩm
+<div class="container">
   <div id="time_show">
     <!-- show -->
   </div>
@@ -20,7 +19,7 @@
         <input type="number" class="form-control shadow-none" placeholder="Giá" id="gia">
       </div>
       <label for="exampleDataList" class="form-label">Loại sách</label>
-      <input class="form-control shadow-none" list="datalistOptions" placeholder="Nhập loại ..." id="idLoai">
+      <input class="form-control shadow-none mb-3" list="datalistOptions" placeholder="Nhập loại ..." id="idLoai">
       <datalist id="datalistOptions">
         <option value="Lịch sử">
         <option value="Văn học">
@@ -51,6 +50,6 @@
 <%- include('partials/footer-admin.html') -%>
 </body>
 <!-- JS -->
-<script src="/admin-edit.js"></script>
+<script src="/admin/admin-edit.js"></script>
 
 </html>

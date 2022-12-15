@@ -10,7 +10,6 @@ let configViewEngine = (app) => {
 
 	// Templating Engine
 	app.set('view engine', 'html');
-	// console.log(`path: ${__dirname}`);
 };
 
 module.exports = configViewEngine;

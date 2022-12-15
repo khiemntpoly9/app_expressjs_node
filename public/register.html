@@ -1,0 +1,63 @@
+<%- include('partials/header.html') -%>
+
+<%- include('partials/navbar.html') -%>
+<div class="container mt-3">
+  <!-- code -->
+  <h3 class="text-center text-uppercase mb-3">Đăng ký</h3>
+  <div class="mx-auto col-12 col-md-4">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control shadow-none" id="username" placeholder="name@example.com">
+      <label for="floatingInput">Tài khoản</label>
+    </div>
+    <div class="row g-2 mb-3">
+        <div class="col-md">
+          <div class="form-floating">
+            <input type="text" class="form-control shadow-none" id="ho" placeholder="Họ">
+            <label for="floatingInputGrid">Họ</label>
+          </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating">
+                <input type="text" class="form-control shadow-none" id="ten" placeholder="Tên">
+                <label for="floatingInputGrid">Tên</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control shadow-none" id="email" placeholder="Email">
+        <label for="floatingInput">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select shadow-none" id="gioitinh" aria-label="Chọn giới tính">
+          <option selected>Giới tính</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+        </select>
+        <label for="gioitinh">Chọn giới tính</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control shadow-none" id="password" placeholder="Password">
+      <label for="floatingPassword">Mật khẩu</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control shadow-none" id="repassword" placeholder="Repeat Password">
+        <label for="floatingPassword">Nhập lại mật khẩu</label>
+      </div>
+    <div class="d-flex justify-content-center mb-3">
+      <div id="regbtn" class="btn btn-success shadow-md">
+        Đăng ký
+      </div>
+    </div>
+    <div class="text-center">
+      <span>Bạn đã có tài khoản? <a href="/login">Đăng nhập</a></span>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer.html') -%>
+</body>
+<!-- Script -->
+<script defer src="/navbar.js"></script>
+<script src="/register.js"></script>
+
+</html>

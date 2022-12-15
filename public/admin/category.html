@@ -1,0 +1,66 @@
+<%- include('partials/header-admin.html') -%>
+<%- include('partials/navbar-admin.html') -%>
+
+<div class="container mt-3">
+  <!-- Add category -->
+  <div class="add-category border rounded p-3 shadow-sm">
+    <h3>Thêm danh mục</h3>
+    <div>
+      <form id="form-cate">
+        <div class="mb-3">
+          <label class="form-label">Tên danh mục</label>
+          <input type="text" class="form-control shadow-none" placeholder="Tên danh mục" id="tenLoai">
+        </div>
+        <div class="mb-3 form-check">
+          <input class="form-check-input shadow-none" type="checkbox" value="1" checked id="anHien">
+          <label class="form-check-label">
+            Ẩn / Hiện
+          </label>
+        </div>
+        <div class="mb-3 d-flex justify-content-end">
+          <button id="addcategory" type="submit" class="btn btn-success">Thêm danh mục</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Show Category -->
+  <div class="show-category mt-3">
+    <!-- Show category -->
+  </div>
+
+  <!-- Modal Edit Category -->
+  <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Chỉnh sửa danh mục</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="form-cate-edit">
+            <div class="mb-3">
+              <label class="form-label">Tên danh mục</label>
+              <input type="text" class="form-control shadow-none" placeholder="Tên danh mục" id="tenLoaiUpdate">
+            </div>
+            <div class="mb-3 form-check">
+              <input class="form-check-input shadow-none" type="checkbox" value="1" checked id="anHienUpdate">
+              <label class="form-check-label">
+                Ẩn / Hiện
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!-- button save -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer-admin.html') -%>
+</body>
+<!-- JS -->
+<script src="/admin/admin-cate.js"></script>
+
+</html>

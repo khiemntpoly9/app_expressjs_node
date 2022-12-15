@@ -4,14 +4,14 @@ const getCategory = async () => {
 	return res;
 };
 getCategory().then((res) => {
-	const show_category = document.querySelector('.navbar-nav');
+	const show_category = document.querySelector('.getcate');
 	let arr = res.data;
 
 	Array.from(arr.result).forEach((i) => {
 		const item_category = `
-            <li class="nav-item">
-                <a class="nav-link" href="/sach/cat?id=${i.id}">${i.tenLoai}</a>
-            </li>
+			<li>
+				<a class="dropdown-item" href="/sach/cat?id=${i.id}">${i.tenLoai}</a>
+			</li>
             `;
 		show_category.innerHTML += item_category;
 	});
