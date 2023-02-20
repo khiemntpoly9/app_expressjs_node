@@ -1,3 +1,8 @@
-# lab_nodejs
+# Hô hô hô
 
-Nhớ chỉnh file package & webpack config
+- Đây là bản Nodejs API nâng cấp của Khiêm
+- Lưu ý nên đọc file này trước khi sử dụng
+
+## RUN APP
+
+- npm start
