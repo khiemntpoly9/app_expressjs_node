@@ -40,6 +40,7 @@ const UserController = {
         res.json({
             id: user.id,
             username: user.userName,
+            role: user.role,
             token: token,
         });
     },
