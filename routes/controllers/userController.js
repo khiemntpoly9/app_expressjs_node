@@ -55,9 +55,7 @@ const UserController = {
             const userId = decodedToken.userId;
             // Thực hiện xoá phiên làm việc của người dùng trên server ở đây
             // ...
-            console.log(`ID User: ${userId}`);
-            // const user = await User.findById(userId);
-            const user = await User.findByPk(id);
+            const user = await User.findOne({ where: { id: userId } });
             user.token = null;
             await user.save();
             res.json({ message: "Đăng xuất thành công" });
