@@ -25,10 +25,12 @@ router.delete("/category/del", cateController.deleteCate);
 
 // Định nghĩa route User
 router.post("/auth", userController.authLogin);
+router.post("/logout", userController.authLogout);
 router.get("/users", authenticateToken, userController.getAllUsers);
 router.get("/users/:id", authenticateToken, userController.getUserById);
 router.post("/createuser", userController.createUser);
-router.put("/updateuser/:id", authenticateToken, userController.updateUser);
+// router.put("/updateuser", authenticateToken, userController.updateUser);
+router.put("/updateuser", userController.updateUser);
 router.delete("/deleteuser/:id", authenticateToken, userController.deleteUser);
 
 module.exports = router;

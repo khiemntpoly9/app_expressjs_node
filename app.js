@@ -1,6 +1,9 @@
-const express = require('express');
-const routes = require('./routes/routes');
-const cors = require('cors');
+const express = require("express");
+const routes = require("./routes/routes");
+const cors = require("cors");
+
+// .ENV
+require("dotenv").config();
 
 const app = express();
 
@@ -12,12 +15,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // routes
-app.use('/', routes);
+app.use("/", routes);
 
 // error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+    console.error(err.stack);
+    res.status(500).send("Something broke!");
 });
 
 // start the server
