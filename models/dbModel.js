@@ -118,6 +118,9 @@ const User = sequelize.define(
       allowNull: false,
       unique: true,
     },
+    img_avt: {
+      type: DataTypes.STRING(255),
+    },
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -160,15 +163,15 @@ const User = sequelize.define(
 // Kiểu Number không được hỗ trợ trên Mysql, hãy dùng kiểu Integer
 
 // Bố m commet lại :)
-async function syncModels() {
-  /*
-    Kiểm tra bảng trong cơ sở dữ liệu (có những trường nào, kiểu dữ liệu là gì ...)
-    sau đó sẽ thay đổi phù hợp với model
-    */
-  await sequelize.sync({ alter: true });
-  console.log('Models synced successfully.');
-}
-syncModels();
+// async function syncModels() {
+//   /*
+//     Kiểm tra bảng trong cơ sở dữ liệu (có những trường nào, kiểu dữ liệu là gì ...)
+//     sau đó sẽ thay đổi phù hợp với model
+//     */
+//   await sequelize.sync({ alter: true });
+//   console.log('Models synced successfully.');
+// }
+// syncModels();
 
 // N - 1: Nhiều user những mỗi User chỉ có 1 role
 User.belongsTo(Role, { foreignKey: 'roleid' });

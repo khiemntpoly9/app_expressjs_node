@@ -21,6 +21,10 @@ const UserController = {
       where: {
         userName: userName,
       },
+      include: {
+        model: Role,
+        attributes: ['nameRole', 'name'],
+      },
     });
     // Kiểm tra tính hợp lệ của tên đăng nhập và mật khẩu
     if (!user) {
@@ -37,10 +41,11 @@ const UserController = {
     user.token = token;
     await user.save();
     // Trả về token cho trang đăng nhập
+    console.log(`Name Role: ${user.role.nameRole}`);
     res.json({
       id: user.id,
       username: user.userName,
-      role: user.role,
+      role: user.role.nameRole,
       token: token,
     });
   },
@@ -71,7 +76,7 @@ const UserController = {
       const users = await User.findAll({
         include: {
           model: Role,
-          attributes: ['name'],
+          attributes: ['nameRole', 'name'],
         },
       });
       res.status(200).json(users);
@@ -144,6 +149,27 @@ const UserController = {
       }
       const updatedUser = await User.findByPk(id);
       res.send(updatedUser);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Internal Server Error');
+    }
+  },
+
+  // Sửa thông role, admin
+  updateUserv2: async (req, res) => {
+    const { id } = req.query;
+    const { fullName, roleid, img_avt } = req.body;
+    try {
+      const numRows = await User.update(
+        { fullName, roleid, img_avt, updatedAt: Sequelize.literal('CURRENT_TIMESTAMP') },
+        { returning: true, where: { id } }
+      );
+      if (numRows[0] === 0) {
+        res.status(404).send('User not found');
+        return;
+      }
+      const updatedUserv2 = await User.findByPk(id);
+      res.send(updatedUserv2);
     } catch (error) {
       console.log(error);
       res.status(500).send('Internal Server Error');

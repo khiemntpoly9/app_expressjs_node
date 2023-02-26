@@ -33,6 +33,7 @@ router.get('/users/:id', userController.getUserById);
 router.post('/createuser', userController.createUser);
 // router.put("/updateuser", authenticateToken, userController.updateUser);
 router.put('/updateuser', userController.updateUser);
+router.put('/updateuserv2', userController.updateUserv2);
 router.delete('/deleteuser/:id', userController.deleteUser);
 
 module.exports = router;
