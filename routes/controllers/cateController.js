@@ -1,5 +1,5 @@
 // import model Category vào file  userController
-const { Category } = require("../../models/productModel");
+const { Category } = require("../../models/dbModel");
 const Sequelize = require("sequelize");
 
 const CateController = {

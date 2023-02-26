@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
+const User = require('../models/dbModel');
 
 const authenticateToken = async (req, res, next) => {
   // Lấy token từ header của yêu cầu
@@ -10,7 +10,6 @@ const authenticateToken = async (req, res, next) => {
     // Nếu không tìm thấy token, trả về lỗi 401
     return res.status(401).json({ message: 'Không tìm thấy Token!' });
   }
-
   try {
     // Giải mã token để lấy ra định danh của người dùng
     const decoded = jwt.verify(token, 'secret_key');

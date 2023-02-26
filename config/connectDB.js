@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 
+// asm-angular
 const sequelize = new Sequelize('asm-angular', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
