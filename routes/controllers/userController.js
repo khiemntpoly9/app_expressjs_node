@@ -86,12 +86,28 @@ const UserController = {
     }
   },
 
+  // Lấy thông tin Role
+  getRoleDetail: async (req, res) => {
+    try {
+      const listrole = await Role.findAll();
+      res.status(200).json(listrole);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
+
   // Lấy thông tin user theo ID
   getUserById: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
     try {
       // Dùng phương thức User.findByPk để tìm 'id' tương ứng
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(id, {
+        include: {
+          model: Role,
+          attributes: ['nameRole', 'name'],
+        },
+      });
       if (!user) {
         res.status(404).send('User not found');
         return;
@@ -178,7 +194,7 @@ const UserController = {
 
   // Xoá User
   deleteUser: async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.query;
     try {
       const deletedRows = await User.destroy({
         where: { id },
@@ -187,7 +203,7 @@ const UserController = {
         res.status(404).send('User not found');
         return;
       }
-      res.send('User deleted successfully');
+      res.json({ message: 'User deleted successfully' });
     } catch (error) {
       console.log(error);
       res.status(500).send('Internal Server Error');

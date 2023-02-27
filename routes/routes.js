@@ -29,11 +29,12 @@ router.post('/logout', userController.authLogout);
 // Bảo mật API
 // router.get("/users", authenticateToken, userController.getAllUsers);
 router.get('/users', userController.getAllUsers);
-router.get('/users/:id', userController.getUserById);
+router.get('/user', userController.getUserById);
+router.get('/listrole', userController.getRoleDetail);
 router.post('/createuser', userController.createUser);
 // router.put("/updateuser", authenticateToken, userController.updateUser);
 router.put('/updateuser', userController.updateUser);
 router.put('/updateuserv2', userController.updateUserv2);
-router.delete('/deleteuser/:id', userController.deleteUser);
+router.delete('/deleteuser', userController.deleteUser);
 
 module.exports = router;
