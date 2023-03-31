@@ -1,9 +1,14 @@
+/* eslint-disable security/detect-non-literal-fs-filename */
+/* eslint-disable no-undef */
+/* eslint-disable security/detect-non-literal-require */
+/* eslint-disable security/detect-object-injection */
 'use strict';
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
+// eslint-disable-next-line no-undef
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
