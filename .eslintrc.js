@@ -4,7 +4,12 @@ module.exports = {
 		commonjs: true,
 		es2021: true,
 	},
-	extends: ['plugin:prettier/recommended', 'prettier'],
+	extends: [
+		'eslint:recommended',
+		'plugin:prettier/recommended',
+		'plugin:security/recommended',
+		'plugin:import/recommended',
+	],
 	plugins: ['prettier'],
 	overrides: [],
 	parserOptions: {
