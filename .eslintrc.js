@@ -15,5 +15,10 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 'latest',
 	},
-	rules: { 'prettier/prettier': 'error', 'arrow-body-style': 'off', 'prefer-arrow-callback': 'off' },
+	rules: {
+		'prettier/prettier': 'error',
+		'arrow-body-style': 'off',
+		'prefer-arrow-callback': 'off',
+		'no-unused-vars': 'off',
+	},
 };
