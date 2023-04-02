@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Nodemail
 const nodemailer = require('nodemailer');
 // Handlebars
@@ -31,6 +32,7 @@ let options = {
 transporter.use('compile', hbs(options));
 
 const mailApp = {
+	// Mail thông báo tạo tài khoản
 	createAccount: async (lastName, email) => {
 		try {
 			const mail = {
@@ -41,6 +43,24 @@ const mailApp = {
 				context: {
 					lastName: lastName,
 					email: email,
+				},
+			};
+			let info = await transporter.sendMail(mail);
+			console.log('Gửi mail thành công!');
+		} catch (error) {
+			console.log(error);
+		}
+	},
+	// Mail khôi phục mật khẩu
+	forgotpass: async (number, email) => {
+		try {
+			const mail = {
+				from: '"Ant Home Poly" <anthomepoly@gmail.com>',
+				to: email,
+				subject: 'Khôi phục mật khẩu!',
+				template: 'forgotpass',
+				context: {
+					number: number,
 				},
 			};
 			let info = await transporter.sendMail(mail);

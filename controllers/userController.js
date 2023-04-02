@@ -1,10 +1,19 @@
+/* eslint-disable no-undef */
 const db = require('../models/index');
-const { User, Role } = db;
+const { User, Role, PassCode } = db;
+const { Op } = require('sequelize');
+// Mail app
+const mailApp = require('../mail/mailApp');
 // .ENV
 require('dotenv').config();
-
+//
+const jwt = require('jsonwebtoken');
+// Sử dụng biến môi trường JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
+//
 const Sequelize = require('sequelize');
 
+// Mã hoá mật khẩu
 const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
@@ -148,6 +157,104 @@ const UserController = {
 			res.status(500).json({ message: 'Internal Server Error' });
 		}
 	},
+	// Tạo mã khôi phục mật khẩu
+	forgotpass: async (req, res) => {
+		// Tạo 6 số ngẫu nhiên
+		let randomNum = Math.floor(Math.random() * 1000000);
+		// Định dạng số thành chuỗi 6 chữ số
+		let formattedNum = String(randomNum).padStart(6, '0');
+		// Tỷ lệ cả 6 số trung nhau 0,027%
+		const user = req.user;
+		try {
+			// Kiểm tra email đã có trong danh sách khôi phục!
+			const existingUser = await PassCode.findOne({ where: { email_user: user.email } });
+			if (existingUser) {
+				res.status(400).json({ message: 'Hãy thử lại sau ít phút!' });
+			} else {
+				// Upload data
+				const passCode = await PassCode.create({
+					email_user: user.email,
+					code: formattedNum,
+					createdAt: Date.now(),
+				});
+				// Gửi mail khi tạo mã thành công
+				mailApp.forgotpass(formattedNum, user.email);
+				// Tạo mã thông báo (token) để xác thực yêu cầu của người dùng
+				const token = jwt.sign({ email_user: user.email }, JWT_SECRET);
+				res
+					.cookie('forgot_auth', token, { httpOnly: true })
+					.json({ message: 'Tạo mã khôi phục thành công!' });
+			}
+		} catch (error) {
+			console.log(error);
+			res.status(500).json({ message: 'Internal Server Error!' });
+		}
+	},
+
+	// Check code
+	checkCodeForgot: async (req, res) => {
+		const token = req.cookies.forgot_auth;
+		const { code_auth } = req.body;
+		try {
+			const decoded = jwt.verify(token, JWT_SECRET);
+			// Check xem mã xác thực còn hiệu lực
+			const user_code = await PassCode.findOne({
+				where: {
+					email_user: decoded.email_user,
+				},
+			});
+			// Check điều kiện
+			if (!user_code) {
+				return res
+					.clearCookie('forgot_auth', { sameSite: 'none', secure: true })
+					.json({ message: 'Mã xác thực đã hết hạn! Vui lòng thử lại' });
+			}
+			// console.log(user_code.code);
+			if (code_auth == user_code.code) {
+				// Xoá mã code
+				const deletedRows = await PassCode.destroy({
+					where: { id_code: user_code.id_code },
+				});
+				// Xoá cookies
+				return res.json({ message: 'Mã xác thực đúng!', setPage: '/resetpass' });
+			} else {
+				return res.json({ message: 'Mã xác thực sai! Vui lòng thử lại' });
+			}
+		} catch (error) {
+			return res.status(403).json({ message: 'Lỗi xác thực token!' });
+		}
+	},
+
+	// Tạo mật khẩu mới
+	changeNewPass: async (req, res) => {
+		const token = req.cookies.forgot_auth;
+		const { passNew } = req.body;
+		try {
+			const decoded = jwt.verify(token, JWT_SECRET);
+			const user = await User.findOne({
+				where: {
+					email: decoded.email_user,
+				},
+			});
+			// Mã hoá mật khẩu mới
+			const salt = await bcryptjs.genSalt(saltRounds);
+			const hashedPassword = await bcryptjs.hash(passNew, salt);
+			// Đổi mật khẩu
+			const numRows = await User.update(
+				// UpdateAt thêm thời gian lúc update
+				{
+					password: hashedPassword,
+					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
+				},
+				{ returning: true, where: { id_user: user.id_user } }
+			);
+			res
+				.clearCookie('forgot_auth', { sameSite: 'none', secure: true })
+				.json({ message: 'Chúc mừng bạn đăng đăng ký mới mật khẩu thành công!' });
+		} catch (error) {
+			console.log(erro);
+		}
+	},
 
 	// Đổi role tài khoản
 	changeRole: async (req, res) => {
@@ -191,5 +298,26 @@ const UserController = {
 		}
 	},
 };
+
+// Xoá các code đã quá hạn
+async function deleteExpiredCodes() {
+	const expiredCodes = await PassCode.findAll({
+		where: {
+			createdAt: {
+				// lấy tất cả các PassCode có thời gian tạo trước 5 phút trước đó
+				[Op.lt]: new Date(Date.now() - 5 * 60 * 1000),
+			},
+		},
+	});
+
+	// Xoá tất cả các PassCode hết hạn
+	for (const code of expiredCodes) {
+		await code.destroy();
+	}
+	// console.log(`Đã xoá ${expiredCodes.length} code đã quá hạn.`);
+	// Gọi lại hàm deleteExpiredCodes sau 5 phút
+	setTimeout(deleteExpiredCodes, 60 * 1000);
+}
+deleteExpiredCodes();
 
 module.exports = UserController;

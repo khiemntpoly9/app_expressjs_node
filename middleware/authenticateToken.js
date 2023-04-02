@@ -91,7 +91,7 @@ const authenticateToken = {
 		}
 		try {
 			const decoded = jwt.verify(token, JWT_SECRET);
-			console.log(decoded.role);
+			// console.log(decoded.role);
 			if (decoded.role == 'qtv') {
 				next();
 			} else {
@@ -144,6 +144,27 @@ const authenticateToken = {
 				.clearCookie('access_token', { sameSite: 'none', secure: true })
 				.json({ message: 'Đăng xuất thành công!' });
 		} catch (err) {
+			console.log(error);
+			res.status(500).json({ message: 'Internal Server Error' });
+		}
+	},
+	// Đổi mật khẩu, check tài khoản có tồn tại
+	checkUser: async (req, res, next) => {
+		const { email } = req.body;
+		try {
+			// Tìm kiếm người dùng trong cơ sở dữ liệu
+			const user = await User.findOne({
+				where: {
+					email: email,
+				},
+			});
+			// Kiểm tra tài khoản có tồn tại
+			if (!user) {
+				return res.status(401).json({ message: 'Tài khoản không tồn tại!' });
+			}
+			req.user = user;
+			next();
+		} catch (error) {
 			console.log(error);
 			res.status(500).json({ message: 'Internal Server Error' });
 		}
