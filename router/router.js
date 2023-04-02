@@ -30,13 +30,13 @@ router.put('/category/update', cateController.updateCate);
 router.delete('/category/del', cateController.deleteCate);
 
 // Định nghĩa route User
-router.post('/auth', userController.authLogin);
-router.post('/logout', authToken.authLogout, userController.authLogout);
+router.post('/auth', authToken.authLogin);
+router.post('/logout', authToken.authLogout);
 // Bảo mật API
 router.get('/users', authToken.adminRole, userController.getAllUsers);
 router.get('/user', userController.getUserById);
 router.get('/listrole', userController.getRoleDetail);
-router.post('/createuser', userController.createUser);
+router.post('/createuser', authToken.createUser);
 // router.put("/updateuser", authenticateToken, userController.updateUser);
 router.put('/updateuser', userController.updateUser);
 router.put('/changepass', userController.changePassword);

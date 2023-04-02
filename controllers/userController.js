@@ -1,75 +1,14 @@
 const db = require('../models/index');
 const { User, Role } = db;
-const mailApp = require('../mail/mailApp');
 // .ENV
 require('dotenv').config();
-// Nodemail
-const jwt = require('jsonwebtoken');
+
 const Sequelize = require('sequelize');
-
-// .ENV
-require('dotenv').config();
-
-// Sử dụng biến môi trường JWT_SECRET
-const JWT_SECRET = process.env.JWT_SECRET;
 
 const bcryptjs = require('bcryptjs');
 const saltRounds = 10;
 
 const UserController = {
-	// Auth Login
-	authLogin: async (req, res) => {
-		const { email, password } = req.body;
-		// Tìm kiếm người dùng trong cơ sở dữ liệu
-		const user = await User.findOne({
-			where: {
-				email: email,
-			},
-			include: {
-				model: Role,
-				attributes: ['name_role', 'short_role'],
-			},
-		});
-		// Kiểm tra tính hợp lệ của tên đăng nhập và mật khẩu
-		if (!user) {
-			return res.status(401).json({ message: 'Tài khoản hoặc mật khẩu không hợp lệ!' });
-		}
-		// So sánh mật khẩu
-		const passwordMatches = await bcryptjs.compare(password, user.password);
-		if (!passwordMatches) {
-			return res.status(401).json({ message: 'Tài khoản hoặc mật khẩu không hợp lệ!' });
-		}
-		// Tạo mã thông báo (token) để xác thực yêu cầu của người dùng
-		const token = jwt.sign(
-			{ userId: user.id_user, fullName: user.last_name, role: user.Role.short_role },
-			JWT_SECRET
-		);
-		// Lưu trữ token trong cơ sở dữ liệu
-		user.token = token;
-		await user.save();
-		// Trả về cookie lưu ở người dùng
-		res.cookie('access_token', token, { httpOnly: true }).json({ message: 'Đăng nhập thành công!' });
-	},
-
-	// Logout
-	authLogout: async (req, res) => {
-		const { id_user } = req.user;
-		try {
-			// Thực hiện xoá token người dùng ở server
-			const user = await User.findByPk(id_user);
-			// Set token null
-			user.token = null;
-			await user.save();
-			res
-				// Xoá cookie
-				.clearCookie('access_token', { sameSite: 'none', secure: true })
-				.json({ message: 'Đăng xuất thành công!' });
-		} catch (error) {
-			console.log(error);
-			res.status(500).json({ message: 'Internal Server Error' });
-		}
-	},
-
 	// Lấy tất cả Account
 	getAllUsers: async (req, res) => {
 		try {
@@ -130,32 +69,6 @@ const UserController = {
 		} catch (error) {
 			console.log(error);
 			res.status(500).send('Internal Server Error');
-		}
-	},
-
-	// Tạo User
-	// Tạo userName giống nhau sẽ bị lỗi, vì bên Model unique: true
-	createUser: async (req, res) => {
-		const { first_name, last_name, phone, email, password } = req.body;
-		try {
-			// Kiểm tra userName tồn tại chưa
-			const existingUser = await User.findOne({ where: { email: email } });
-			if (existingUser) {
-				res.status(400).json({ message: 'Tài khoản đã tồn tại' });
-			} else {
-				// Mã hoá mật khẩu
-				const salt = await bcryptjs.genSalt(saltRounds);
-				const hashedPassword = await bcryptjs.hash(password, salt);
-				// Upload data
-				const user = await User.create({ first_name, last_name, phone, email, password: hashedPassword });
-				// Gửi mail khi tạo tài khoản thành công
-				mailApp.createAccount(last_name, email);
-				// End mail
-				res.status(201).json({ message: 'Tạo tài khoản thành công!' });
-			}
-		} catch (error) {
-			console.log(error);
-			res.status(500).json({ message: 'Internal Server Error!' });
 		}
 	},
 

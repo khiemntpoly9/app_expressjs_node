@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes/routes');
+const router = require('./router/router');
 const cors = require('cors');
 const connectDB = require('./config/connectDB');
 
@@ -24,7 +24,7 @@ app.use(cookieParser());
 connectDB();
 
 // routes
-app.use('/api', routes);
+app.use('/api', router);
 
 // error handling middleware
 app.use((err, req, res, next) => {
@@ -33,5 +33,6 @@ app.use((err, req, res, next) => {
 });
 
 // start the server
+// eslint-disable-next-line no-undef
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));
