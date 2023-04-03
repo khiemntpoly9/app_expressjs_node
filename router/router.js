@@ -21,6 +21,8 @@ router.get('/products', productController.getAllProduct);
 router.get('/product', productController.getProductById);
 router.get('/product/catechild', productController.getProdByCateChildId);
 router.get('/product/cate', productController.getProdByCateId);
+router.get('/products-price', productController.filterProductPrice);
+router.get('/search-product', productController.searchProduct);
 
 // Định nghĩa route Category
 router.post('/category/create', cateController.createCate);
