@@ -54,10 +54,10 @@ const UserController = {
 
 	// Lấy thông tin user theo ID
 	getUserById: async (req, res) => {
-		const { id } = req.query;
+		const { userId } = req.user;
 		try {
 			// Dùng phương thức User.findByPk để tìm 'id' tương ứng
-			const user = await User.findByPk(id, {
+			const user = await User.findByPk(userId, {
 				attributes: ['id_user', 'first_name', 'last_name', 'email', 'phone'],
 				include: [
 					{
@@ -99,7 +99,7 @@ const UserController = {
 					// password: hashedPassword,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
-				{ returning: true, where: { id_user: id } }
+				{ returning: true, where: { id_user: id } },
 			);
 			// Hàm update trả về một mảng có một phần tử, là số lượng bản ghi đã được cập nhật.
 			// Nếu số lượng bản ghi này bằng 0, có nghĩa là không tìm thấy người dùng có ID bằng id,
@@ -145,7 +145,7 @@ const UserController = {
 					password: hashedPassword,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
-				{ returning: true, where: { id_user: id } }
+				{ returning: true, where: { id_user: id } },
 			);
 			if (numRows[0] === 0) {
 				res.status(404).json({ message: 'User not found' });
@@ -246,7 +246,7 @@ const UserController = {
 					password: hashedPassword,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
-				{ returning: true, where: { id_user: user.id_user } }
+				{ returning: true, where: { id_user: user.id_user } },
 			);
 			res
 				.clearCookie('forgot_auth', { sameSite: 'none', secure: true })
@@ -267,7 +267,7 @@ const UserController = {
 					id_role: newRole,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
-				{ returning: true, where: { id_user: id } }
+				{ returning: true, where: { id_user: id } },
 			);
 			if (numRows[0] === 0) {
 				res.status(404).json({ message: 'User not found' });

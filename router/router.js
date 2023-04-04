@@ -5,7 +5,9 @@ const cateController = require('../controllers/cateController');
 const productController = require('../controllers/productController');
 const mailController = require('../mail/mailApp');
 
+// Middleware
 const authToken = require('../middleware/authenticateToken');
+const userToken = require('../middleware/getForUserToken');
 // Áp dụng middleware để xác thực tính hợp lệ của token cho tất cả các tài nguyên bảo vệ
 // router.use(authToken);
 
@@ -36,7 +38,7 @@ router.post('/auth', authToken.authLogin);
 router.post('/logout', authToken.authLogout);
 // User, Role
 router.get('/users', authToken.adminRole, userController.getAllUsers);
-router.get('/user', userController.getUserById);
+router.get('/user', userToken.getInfoUser, userController.getUserById);
 router.get('/listrole', userController.getRoleDetail);
 router.post('/createuser', authToken.createUser);
 router.post('/forgotpass', authToken.checkUser, userController.forgotpass);

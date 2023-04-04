@@ -65,7 +65,7 @@ const authenticateToken = {
 		// Tạo mã thông báo (token) để xác thực yêu cầu của người dùng
 		const token = jwt.sign(
 			{ userId: user.id_user, fullName: user.last_name, role: user.Role.short_role },
-			JWT_SECRET
+			JWT_SECRET,
 		);
 		// Lưu trữ token trong cơ sở dữ liệu
 		user.token = token;
