@@ -39,6 +39,7 @@ router.post('/logout', authToken.authLogout);
 // User, Role
 router.get('/users', authToken.adminRole, userController.getAllUsers);
 router.get('/user', userToken.getInfoUser, userController.getUserById);
+router.get('/user-manage', userController.getUserByIdManage);
 router.get('/listrole', userController.getRoleDetail);
 router.post('/createuser', authToken.createUser);
 router.post('/forgotpass', authToken.checkUser, userController.forgotpass);

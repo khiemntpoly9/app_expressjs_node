@@ -81,6 +81,35 @@ const UserController = {
 		}
 	},
 
+	// Lấy thông tin User quản lý
+	getUserByIdManage: async (req, res) => {
+		const { userid } = req.query;
+		try {
+			// Dùng phương thức User.findByPk để tìm 'id' tương ứng
+			const user = await User.findByPk(userid, {
+				attributes: ['id_user', 'first_name', 'last_name', 'email', 'phone'],
+				include: [
+					{
+						model: Role,
+						attributes: ['name_role', 'short_role'],
+					},
+					// {
+					//   model: Address,
+					//   attributes: ['id_address', 'name_address'],
+					// },
+				],
+			});
+			if (!user) {
+				res.status(404).json({ message: 'User not found' });
+				return;
+			}
+			res.status(200).json(user);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send('Internal Server Error');
+		}
+	},
+
 	// Sửa thông tin User
 	updateUser: async (req, res) => {
 		const { id } = req.query;

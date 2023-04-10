@@ -72,14 +72,18 @@ const authenticateToken = {
 		await user.save();
 		// Trả về cookie lưu ở người dùng
 		// Check role người dùng khi đăng nhập
-		if (user.Role.short_role === 'qtv' || user.Role.short_role === 'ctv') {
+		if (user.Role.short_role === 'qtv') {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! Admin', setPage: '/admin' });
+				.json({ message: 'Đăng nhập thành công! Admin', role: 'admin' });
+		} else if (user.Role.short_role === 'ctv') {
+			return res
+				.cookie('access_token', token, { httpOnly: true })
+				.json({ message: 'Đăng nhập thành công! CTV', role: 'ctv' });
 		} else {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! User', setPage: '/home' });
+				.json({ message: 'Đăng nhập thành công! User', role: 'user' });
 		}
 	},
 	// Admin
