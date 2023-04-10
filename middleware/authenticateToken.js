@@ -120,6 +120,25 @@ const authenticateToken = {
 			return res.status(403).json({ message: 'Lỗi xác thực token!' });
 		}
 	},
+	// Manager Role
+	manageRole: async (req, res, next) => {
+		// Lấy token từ header của yêu cầu
+		const token = req.cookies.access_token;
+		if (!token) {
+			return res.status(401).json({ message: 'Không tìm thấy token xác thực!' });
+		}
+		try {
+			const decoded = jwt.verify(token, JWT_SECRET);
+			console.log(decoded.role);
+			if (decoded.role == 'admin' || decoded.role == 'ctv') {
+				next();
+			} else {
+				return res.status(401).json({ message: 'Bạn không có quyền truy cập!' });
+			}
+		} catch (error) {
+			return res.status(403).json({ message: 'Lỗi xác thực token!' });
+		}
+	},
 	// Đăng xuất
 	authLogout: async (req, res, next) => {
 		// Lấy token từ header của yêu cầu

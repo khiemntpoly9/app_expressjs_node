@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false,
 			tableName: 'forgotpasscode',
 			modelName: 'PassCode',
-		}
+		},
 	);
 	return PassCode;
 };

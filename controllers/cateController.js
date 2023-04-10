@@ -22,7 +22,7 @@ const CateController = {
 			const numRows = await Category.update(
 				// UpdateAt thêm thời gian lúc update
 				{ name_category, updatedAt: Sequelize.literal('CURRENT_TIMESTAMP') },
-				{ returning: true, where: { id_category: idcate } }
+				{ returning: true, where: { id_category: idcate } },
 			);
 			if (numRows[0] === 0) {
 				res.status(404).json({ message: 'Khômg tìm thấy danh mục!' });

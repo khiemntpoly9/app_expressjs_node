@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 // Định nghĩa route Product
-router.post('/product/create', productController.createProduct);
+router.post('/product/create', authToken.manageRole, productController.createProduct);
 router.put('/product/update', productController.updateProduct);
 router.delete('/product/del', productController.deleteProduct);
 router.get('/products', productController.getAllProduct);

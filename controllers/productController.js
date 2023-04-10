@@ -59,7 +59,7 @@ const ProductController = {
 					style_prod,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
-				{ returning: true, where: { id_product: id } }
+				{ returning: true, where: { id_product: id } },
 			);
 			// Hàm update trả về một mảng có một phần tử, là số lượng bản ghi đã được cập nhật.
 			// Nếu số lượng bản ghi này bằng 0, có nghĩa là không tìm thấy người dùng có ID bằng id,
