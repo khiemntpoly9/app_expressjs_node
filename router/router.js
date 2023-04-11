@@ -3,11 +3,13 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const cateController = require('../controllers/cateController');
 const productController = require('../controllers/productController');
+const brandController = require('../controllers/brandController');
 const mailController = require('../mail/mailApp');
 
 // Middleware
 const authToken = require('../middleware/authenticateToken');
 const userToken = require('../middleware/getForUserToken');
+const authenticateToken = require('../middleware/authenticateToken');
 // Áp dụng middleware để xác thực tính hợp lệ của token cho tất cả các tài nguyên bảo vệ
 // router.use(authToken);
 
@@ -16,7 +18,8 @@ router.get('/', (req, res) => {
 });
 
 // Định nghĩa route Product
-router.post('/product/create', authToken.manageRole, productController.createProduct);
+// router.post('/product/create', authToken.manageRole, productController.createProduct);
+router.post('/product/create', productController.createProduct);
 router.put('/product/update', productController.updateProduct);
 router.delete('/product/del', productController.deleteProduct);
 router.get('/products', productController.getAllProduct);
@@ -36,6 +39,7 @@ router.delete('/category/del', cateController.deleteCate);
 // Định nghĩa route User
 router.post('/auth', authToken.authLogin);
 router.post('/logout', authToken.authLogout);
+router.post('/checkuser', authenticateToken.checkUserRole);
 // User, Role
 router.get('/users', authToken.adminRole, userController.getAllUsers);
 router.get('/user', userToken.getInfoUser, userController.getUserById);
@@ -49,6 +53,8 @@ router.put('/updateuser', userController.updateUser);
 router.put('/changepass', userController.changePassword);
 router.put('/changerole', userController.changeRole);
 router.delete('/deleteuser', userController.deleteUser);
+// Brand
+router.get('/brands', brandController.getAllBrand);
 
 // Test mail
 router.get('/mail', mailController.createAccount);

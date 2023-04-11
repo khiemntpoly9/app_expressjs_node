@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			material_prod: {
 				type: DataTypes.INTEGER(11),
-				allowNull: false,
+				allowNull: true,
 			},
 			img_prod: {
 				type: DataTypes.INTEGER(11),
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			style_prod: {
 				type: DataTypes.INTEGER(11),
-				allowNull: false,
+				allowNull: true,
 			},
 		},
 		{

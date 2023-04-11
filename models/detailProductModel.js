@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			detail_prod: {
 				type: DataTypes.TEXT,
-				allowNull: true,
+				allowNull: false,
 			},
 			description_prod: {
 				type: DataTypes.TEXT,
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: true,
 			tableName: 'detail_product',
 			modelName: 'DetailProduct',
-		}
+		},
 	);
 	return DetailProduct;
 };

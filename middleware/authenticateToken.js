@@ -75,15 +75,15 @@ const authenticateToken = {
 		if (user.Role.short_role === 'qtv') {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! Admin', role: 'admin' });
+				.json({ message: 'Đăng nhập thành công! Admin' });
 		} else if (user.Role.short_role === 'ctv') {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! CTV', role: 'ctv' });
+				.json({ message: 'Đăng nhập thành công! CTV' });
 		} else {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! User', role: 'user' });
+				.json({ message: 'Đăng nhập thành công! User' });
 		}
 	},
 	// Admin
@@ -190,6 +190,20 @@ const authenticateToken = {
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({ message: 'Internal Server Error' });
+		}
+	},
+	// Check user role
+	checkUserRole: async (req, res) => {
+		// Lấy Token
+		const token = req.cookies.access_token;
+		if (!token) {
+			return res.status(401).json({ message: 'Bạn chưa đăng nhập!' });
+		}
+		try {
+			const decoded = jwt.verify(token, JWT_SECRET);
+			return res.json(decoded.role);
+		} catch (error) {
+			return res.status(403).json({ message: 'Lỗi xác thực token!' });
 		}
 	},
 };

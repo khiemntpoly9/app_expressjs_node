@@ -5,26 +5,46 @@ const { Sequelize, Op } = require('sequelize');
 const ProductController = {
 	// Thêm sản phẩm
 	createProduct: async (req, res) => {
+		// Nhận các trường dữ liệu
 		const {
 			name_prod,
 			cate_child_prod,
 			brand_prod,
-			id_detail_prod,
+			detail_prod,
 			price_prod,
-			material_prod,
-			img_prod,
-			style_prod,
+			img_prod_1,
+			img_prod_2,
+			img_prod_3,
+			img_prod_4,
+			// Thêm sản phẩm
+			// name_prod,
+			// cate_child_prod,
+			// brand_prod,
+			// id_detail_prod,
+			// price_prod,
+			// material_prod,
+			// img_prod,
+			// style_prod,
 		} = req.body;
 		try {
+			// Tạo data Product detail
+			const productDetail = await DetailProduct.create({ detail_prod });
+			const id_detail_prod = productDetail.id_detail_main;
+			// Tạo data Ảnh Product
+			const imagesProduct = await ImgProduct.create({
+				img_1: img_prod_1,
+				img_2: img_prod_2,
+				img_3: img_prod_3,
+				img_4: img_prod_4,
+			});
+			const img_prod = imagesProduct.id_images;
 			const product = await Product.create({
 				name_prod,
 				cate_child_prod,
 				brand_prod,
 				id_detail_prod,
 				price_prod,
-				material_prod,
 				img_prod,
-				style_prod,
 			});
 			res.status(201).json({ message: 'Thêm sản phẩm thành công!' });
 		} catch (error) {
@@ -112,7 +132,7 @@ const ProductController = {
 					},
 					{
 						model: Brand,
-						attributes: ['name_brand'],
+						attributes: ['id_brand', 'name_brand'],
 					},
 					{
 						model: ImgProduct,
@@ -270,7 +290,7 @@ const ProductController = {
 					},
 					{
 						model: Brand,
-						attributes: ['name_brand'],
+						attributes: ['id_brand', 'name_brand'],
 					},
 					{
 						model: ImgProduct,
