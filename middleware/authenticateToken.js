@@ -75,15 +75,15 @@ const authenticateToken = {
 		if (user.Role.short_role === 'qtv') {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! Admin' });
+				.json({ message: 'Đăng nhập thành công! QTV', role: 'qtv' });
 		} else if (user.Role.short_role === 'ctv') {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! CTV' });
+				.json({ message: 'Đăng nhập thành công! CTV', role: 'ctv' });
 		} else {
 			return res
 				.cookie('access_token', token, { httpOnly: true })
-				.json({ message: 'Đăng nhập thành công! User' });
+				.json({ message: 'Đăng nhập thành công! User', role: 'user' });
 		}
 	},
 	// Admin
