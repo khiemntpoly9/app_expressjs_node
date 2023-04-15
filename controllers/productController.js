@@ -11,31 +11,32 @@ const ProductController = {
 			cate_child_prod,
 			brand_prod,
 			detail_prod,
+			description_prod,
+			specification_prod,
+			preserve_prod,
 			price_prod,
-			img_prod_1,
-			img_prod_2,
-			img_prod_3,
-			img_prod_4,
-			// Thêm sản phẩm
-			// name_prod,
-			// cate_child_prod,
-			// brand_prod,
-			// id_detail_prod,
-			// price_prod,
-			// material_prod,
-			// img_prod,
-			// style_prod,
+			material_prod,
+			img_1_prod,
+			img_2_prod,
+			img_3_prod,
+			img_4_prod,
+			style_prod,
 		} = req.body;
 		try {
 			// Tạo data Product detail
-			const productDetail = await DetailProduct.create({ detail_prod });
+			const productDetail = await DetailProduct.create({
+				detail_prod,
+				description_prod,
+				specification_prod,
+				preserve_prod,
+			});
 			const id_detail_prod = productDetail.id_detail_main;
 			// Tạo data Ảnh Product
 			const imagesProduct = await ImgProduct.create({
-				img_1: img_prod_1,
-				img_2: img_prod_2,
-				img_3: img_prod_3,
-				img_4: img_prod_4,
+				img_1: img_1_prod,
+				img_2: img_2_prod,
+				img_3: img_3_prod,
+				img_4: img_4_prod,
 			});
 			const img_prod = imagesProduct.id_images;
 			const product = await Product.create({
@@ -44,7 +45,9 @@ const ProductController = {
 				brand_prod,
 				id_detail_prod,
 				price_prod,
+				material_prod,
 				img_prod,
+				style_prod,
 			});
 			res.status(201).json({ message: 'Thêm sản phẩm thành công!' });
 		} catch (error) {
