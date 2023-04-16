@@ -59,4 +59,12 @@ router.get('/brands', brandController.getAllBrand);
 // Test mail
 router.get('/mail', mailController.createAccount);
 
+// API Bảo Vệ
+const baoveController = require('../controllers/baoveController');
+router.get('/getall-item', baoveController.getAllItem);
+router.get('/detail-item', baoveController.detailItem);
+router.post('/create-item', baoveController.createItem);
+router.put('/update-item', baoveController.updateItem);
+router.delete('/delete-item', baoveController.deleteItem);
+
 module.exports = router;

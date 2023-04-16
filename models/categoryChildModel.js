@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: true,
 			tableName: 'category_child',
 			modelName: 'CategoryChild',
-		}
+		},
 	);
 	return CategoryChild;
 };
