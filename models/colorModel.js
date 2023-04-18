@@ -1,6 +1,6 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+export default (sequelize, DataTypes) => {
 	class Colors extends Model {
 		/**
 		 * Helper method for defining associations.
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: true,
 			tableName: 'colors',
 			modelName: 'Colors',
-		}
+		},
 	);
 	return Colors;
 };

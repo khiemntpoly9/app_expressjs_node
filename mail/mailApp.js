@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
 // Nodemail
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 // Handlebars
-const hbs = require('nodemailer-express-handlebars');
+import hbs from 'nodemailer-express-handlebars';
+import * as dotenv from 'dotenv';
 // .ENV
-require('dotenv').config();
+dotenv.config();
 
 // Cấu hình vẫn chuyển
 let transporter = nodemailer.createTransport({
@@ -71,4 +72,4 @@ const mailApp = {
 	},
 };
 
-module.exports = mailApp;
+export default mailApp;

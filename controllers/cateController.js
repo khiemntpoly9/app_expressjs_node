@@ -1,6 +1,6 @@
-const db = require('../models/index');
-const { Product, Category, CategoryChild } = db;
-const Sequelize = require('sequelize');
+import db from '../models/index.js';
+const { Category, CategoryChild } = db;
+import Sequelize from 'sequelize';
 
 const CateController = {
 	// Thêm Category
@@ -95,4 +95,4 @@ const CateController = {
 	},
 };
 
-module.exports = CateController;
+export default CateController;

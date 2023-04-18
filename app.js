@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import express from 'express';
 import router from './router/router.js';
 import cors from 'cors';
@@ -32,6 +33,6 @@ app.use((err, req, res, next) => {
 });
 
 // start the server
-// eslint-disable-next-line no-undef
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+app.listen(port);
+// app.listen(port, () => console.log(`Server listening on port ${port}`));
