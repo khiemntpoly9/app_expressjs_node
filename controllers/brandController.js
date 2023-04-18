@@ -1,4 +1,5 @@
-const db = require('../models/index');
+// const db = require('../models/index');
+import db from '../models/index.js';
 const { Brand } = db;
 
 const BrandController = {
@@ -14,4 +15,4 @@ const BrandController = {
 	},
 };
 
-module.exports = BrandController;
+export default BrandController;

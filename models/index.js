@@ -1,7 +1,6 @@
+/* eslint-disable security/detect-object-injection */
 /* eslint-disable security/detect-non-literal-fs-filename */
 /* eslint-disable no-undef */
-/* eslint-disable security/detect-non-literal-require */
-/* eslint-disable security/detect-object-injection */
 import * as dotenv from 'dotenv';
 // .ENV
 dotenv.config();
@@ -9,11 +8,9 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import process from 'process';
-import configDB from '../config/config.js';
+import config from '../config/config.js';
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = configDB[env];
 const db = {};
 
 let sequelize;
@@ -33,7 +30,8 @@ fs.readdirSync(__dirname)
 		);
 	})
 	.forEach((file) => {
-		const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+		const modelS = import(path.join(__dirname, file));
+		const model = modelS(sequelize, Sequelize.DataTypes);
 		db[model.name] = model;
 	});
 
@@ -46,4 +44,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;
