@@ -1,7 +1,5 @@
 /* eslint-disable import/named */
 /* eslint-disable no-undef */
-// import db from '../models/index.js';
-// const { User, Role, PassCode } = db;
 import db from '../models/index.js';
 const { User, Role, PassCode } = db;
 import Sequelize, { Op } from 'sequelize';

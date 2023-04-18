@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 const db = {};
 const sequelize = new Sequelize(config);
 
-export default (async () => {
+const init = async () => {
 	const files = readdirSync(__dirname).filter(
 		(file) => file.indexOf('.') !== 0 && file !== basename(__filename) && file.slice(-3) === '.js',
 	);
@@ -36,4 +36,6 @@ export default (async () => {
 	db.Sequelize = Sequelize;
 
 	return db;
-})();
+};
+
+export default await init();
