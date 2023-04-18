@@ -1,12 +1,12 @@
-const express = require('express');
-const router = require('./router/router');
-const cors = require('cors');
-const connectDB = require('./config/connectDB');
-
-const cookieParser = require('cookie-parser');
-
+import express from 'express';
+import router from './router/router.js';
+import cors from 'cors';
+import * as dotenv from 'dotenv';
 // .ENV
-require('dotenv').config();
+dotenv.config();
+//
+import connectDB from './config/connectDB.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -25,7 +25,6 @@ connectDB();
 
 // routes
 app.use('/api', router);
-
 // error handling middleware
 app.use((err, req, res, next) => {
 	console.error(err.stack);
