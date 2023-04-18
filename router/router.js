@@ -3,7 +3,7 @@ const router = express.Router();
 
 import userController from '../controllers/userController.js';
 import cateController from '../controllers/cateController.js';
-// const productController = require('../controllers/productController');
+import productController from '../controllers/productController.js';
 import brandController from '../controllers/brandController.js';
 import mailController from '../mail/mailApp.js';
 
@@ -18,16 +18,16 @@ router.get('/', (req, res) => {
 });
 
 // Định nghĩa route Product
-// router.post('/product/create', authToken.manageRole, productController.createProduct);
-// router.post('/product/create', productController.createProduct);
-// router.put('/product/update', productController.updateProduct);
-// router.delete('/product/del', productController.deleteProduct);
-// router.get('/products', productController.getAllProduct);
-// router.get('/product', productController.getProductById);
-// router.get('/product/catechild', productController.getProdByCateChildId);
-// router.get('/product/cate', productController.getProdByCateId);
-// router.get('/products-price', productController.filterProductPrice);
-// router.get('/search-product', productController.searchProduct);
+router.post('/product/create', authToken.manageRole, productController.createProduct);
+router.post('/product/create', productController.createProduct);
+router.put('/product/update', productController.updateProduct);
+router.delete('/product/del', productController.deleteProduct);
+router.get('/products', productController.getAllProduct);
+router.get('/product', productController.getProductById);
+router.get('/product/catechild', productController.getProdByCateChildId);
+router.get('/product/cate', productController.getProdByCateId);
+router.get('/products-price', productController.filterProductPrice);
+router.get('/search-product', productController.searchProduct);
 
 // Định nghĩa route Category
 router.post('/category/create', cateController.createCate);
