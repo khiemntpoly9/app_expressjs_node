@@ -1,15 +1,15 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/userController');
-const cateController = require('../controllers/cateController');
-const productController = require('../controllers/productController');
-const brandController = require('../controllers/brandController');
-const mailController = require('../mail/mailApp');
+
+import userController from '../controllers/userController.js';
+import cateController from '../controllers/cateController.js';
+import productController from '../controllers/productController.js';
+import brandController from '../controllers/brandController.js';
+import mailController from '../mail/mailApp.js';
 
 // Middleware
-const authToken = require('../middleware/authenticateToken');
-const userToken = require('../middleware/getForUserToken');
-const authenticateToken = require('../middleware/authenticateToken');
+import authToken from '../middleware/authenticateToken.js';
+import userToken from '../middleware/getForUserToken.js';
 // Áp dụng middleware để xác thực tính hợp lệ của token cho tất cả các tài nguyên bảo vệ
 // router.use(authToken);
 
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // Định nghĩa route Product
-// router.post('/product/create', authToken.manageRole, productController.createProduct);
+router.post('/product/create', authToken.manageRole, productController.createProduct);
 router.post('/product/create', productController.createProduct);
 router.put('/product/update', productController.updateProduct);
 router.delete('/product/del', productController.deleteProduct);
@@ -39,7 +39,7 @@ router.delete('/category/del', cateController.deleteCate);
 // Định nghĩa route User
 router.post('/auth', authToken.authLogin);
 router.post('/logout', authToken.authLogout);
-router.post('/checkuser', authenticateToken.checkUserRole);
+// router.post('/checkuser', authenticateToken.checkUserRole);
 // User, Role
 router.get('/users', authToken.adminRole, userController.getAllUsers);
 router.get('/user', userToken.getInfoUser, userController.getUserById);
@@ -59,4 +59,4 @@ router.get('/brands', brandController.getAllBrand);
 // Test mail
 router.get('/mail', mailController.createAccount);
 
-module.exports = router;
+export default router;

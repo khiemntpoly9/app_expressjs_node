@@ -1,15 +1,16 @@
 /* eslint-disable no-undef */
-const db = require('../models/index');
+import db from '../models/index.js';
 const { User, Role } = db;
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 // Mail app
-const mailApp = require('../mail/mailApp');
+import mailApp from '../mail/mailApp.js';
 //
-const bcryptjs = require('bcryptjs');
+import bcryptjs from 'bcryptjs';
 const saltRounds = 10;
 
+import * as dotenv from 'dotenv';
 // .ENV
-require('dotenv').config();
+dotenv.config();
 // Sử dụng biến môi trường JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -30,4 +31,4 @@ const getForUserToken = {
 	},
 };
 
-module.exports = getForUserToken;
+export default getForUserToken;

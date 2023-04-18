@@ -1,20 +1,20 @@
+/* eslint-disable import/named */
 /* eslint-disable no-undef */
-const db = require('../models/index');
+import db from '../models/index.js';
 const { User, Role, PassCode } = db;
-const { Op } = require('sequelize');
+import Sequelize, { Op } from 'sequelize';
 // Mail app
-const mailApp = require('../mail/mailApp');
+import mailApp from '../mail/mailApp.js';
+import * as dotenv from 'dotenv';
 // .ENV
-require('dotenv').config();
+dotenv.config();
 //
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 // Sử dụng biến môi trường JWT_SECRET
 const JWT_SECRET = process.env.JWT_SECRET;
-//
-const Sequelize = require('sequelize');
 
 // Mã hoá mật khẩu
-const bcryptjs = require('bcryptjs');
+import bcryptjs from 'bcryptjs';
 const saltRounds = 10;
 
 const UserController = {
@@ -329,24 +329,24 @@ const UserController = {
 };
 
 // Xoá các code đã quá hạn
-async function deleteExpiredCodes() {
-	const expiredCodes = await PassCode.findAll({
-		where: {
-			createdAt: {
-				// lấy tất cả các PassCode có thời gian tạo trước 5 phút trước đó
-				[Op.lt]: new Date(Date.now() - 5 * 60 * 1000),
-			},
-		},
-	});
+// async function deleteExpiredCodes() {
+// 	const expiredCodes = await PassCode.findAll({
+// 		where: {
+// 			createdAt: {
+// 				// lấy tất cả các PassCode có thời gian tạo trước 5 phút trước đó
+// 				[Op.lt]: new Date(Date.now() - 5 * 60 * 1000),
+// 			},
+// 		},
+// 	});
 
-	// Xoá tất cả các PassCode hết hạn
-	for (const code of expiredCodes) {
-		await code.destroy();
-	}
-	// console.log(`Đã xoá ${expiredCodes.length} code đã quá hạn.`);
-	// Gọi lại hàm deleteExpiredCodes sau 5 phút
-	setTimeout(deleteExpiredCodes, 60 * 1000);
-}
-deleteExpiredCodes();
+// 	// Xoá tất cả các PassCode hết hạn
+// 	for (const code of expiredCodes) {
+// 		await code.destroy();
+// 	}
+// 	// console.log(`Đã xoá ${expiredCodes.length} code đã quá hạn.`);
+// 	// Gọi lại hàm deleteExpiredCodes sau 5 phút
+// 	setTimeout(deleteExpiredCodes, 60 * 1000);
+// }
+// deleteExpiredCodes();
 
-module.exports = UserController;
+export default UserController;

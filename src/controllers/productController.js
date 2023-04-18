@@ -1,6 +1,6 @@
-const db = require('../models/index');
+import db from '../models/index.js';
 const { Product, Category, CategoryChild, Brand, ImgProduct, DetailProduct, Colors, ColorProduct } = db;
-const { Sequelize, Op } = require('sequelize');
+import Sequelize, { Op } from 'sequelize';
 
 const ProductController = {
 	// Thêm sản phẩm
@@ -375,4 +375,4 @@ const ProductController = {
 	},
 };
 
-module.exports = ProductController;
+export default ProductController;
