@@ -22,11 +22,11 @@ let transporter = nodemailer.createTransport({
 let options = {
 	viewEngine: {
 		extName: '.hbs',
-		partialsDir: 'mail/template',
-		layoutsDir: 'mail/template',
+		partialsDir: 'src/mail/template',
+		layoutsDir: 'src/mail/template',
 		defaultLayout: '',
 	},
-	viewPath: 'mail/template',
+	viewPath: 'src/mail/template',
 	extName: '.hbs',
 };
 
