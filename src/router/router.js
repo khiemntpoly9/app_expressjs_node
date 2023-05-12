@@ -5,11 +5,11 @@ import userController from '../controllers/userController.js';
 import cateController from '../controllers/cateController.js';
 import productController from '../controllers/productController.js';
 import brandController from '../controllers/brandController.js';
+import authController from '../controllers/authController.js';
 import mailController from '../mail/mailApp.js';
 
 // Middleware
 import authToken from '../middleware/authenticateToken.js';
-import userToken from '../middleware/getForUserToken.js';
 // Áp dụng middleware để xác thực tính hợp lệ của token cho tất cả các tài nguyên bảo vệ
 // router.use(authToken);
 
@@ -37,15 +37,14 @@ router.put('/category/update', cateController.updateCate);
 router.delete('/category/del', cateController.deleteCate);
 
 // Định nghĩa route User
-router.post('/auth', authToken.authLogin);
-router.post('/logout', authToken.authLogout);
-// router.post('/checkuser', authenticateToken.checkUserRole);
+router.post('/register', authController.authRegister);
+router.post('/login', authController.authLogin);
+router.post('/logout', authController.authLogout);
 // User, Role
 router.get('/users', authToken.adminRole, userController.getAllUsers);
-router.get('/user', userToken.getInfoUser, userController.getUserById);
+router.get('/user', authToken.checkLogin, userController.getUserById);
 router.get('/user-manage', userController.getUserByIdManage);
 router.get('/listrole', userController.getRoleDetail);
-router.post('/createuser', authToken.createUser);
 router.post('/forgotpass', authToken.checkUser, userController.forgotpass);
 router.post('/checkcode', userController.checkCodeForgot);
 router.post('/changepassnew', userController.changeNewPass);

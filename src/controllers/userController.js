@@ -329,24 +329,24 @@ const UserController = {
 };
 
 // Xoá các code đã quá hạn
-// async function deleteExpiredCodes() {
-// 	const expiredCodes = await PassCode.findAll({
-// 		where: {
-// 			createdAt: {
-// 				// lấy tất cả các PassCode có thời gian tạo trước 5 phút trước đó
-// 				[Op.lt]: new Date(Date.now() - 5 * 60 * 1000),
-// 			},
-// 		},
-// 	});
+async function deleteExpiredCodes() {
+	const expiredCodes = await PassCode.findAll({
+		where: {
+			createdAt: {
+				// lấy tất cả các PassCode có thời gian tạo trước 5 phút trước đó
+				[Op.lt]: new Date(Date.now() - 5 * 60 * 1000),
+			},
+		},
+	});
 
-// 	// Xoá tất cả các PassCode hết hạn
-// 	for (const code of expiredCodes) {
-// 		await code.destroy();
-// 	}
-// 	// console.log(`Đã xoá ${expiredCodes.length} code đã quá hạn.`);
-// 	// Gọi lại hàm deleteExpiredCodes sau 5 phút
-// 	setTimeout(deleteExpiredCodes, 60 * 1000);
-// }
-// deleteExpiredCodes();
+	// Xoá tất cả các PassCode hết hạn
+	for (const code of expiredCodes) {
+		await code.destroy();
+	}
+	// console.log(`Đã xoá ${expiredCodes.length} code đã quá hạn.`);
+	// Gọi lại hàm deleteExpiredCodes sau 5 phút
+	setTimeout(deleteExpiredCodes, 60 * 1000);
+}
+deleteExpiredCodes();
 
 export default UserController;
