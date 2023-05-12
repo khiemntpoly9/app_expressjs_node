@@ -1,21 +1,30 @@
 'use strict';
 import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
-	class Brand extends Model {
+	class Cart extends Model {
 		static associate(models) {
-			Brand.hasMany(models.Product, { foreignKey: 'brand_prod' });
+			Cart.hasMany(models.User, { foreignKey: 'id_user' });
+			Cart.hasMany(models.Product, { foreignKey: 'id_product' });
 		}
 	}
-	Brand.init(
+	Cart.init(
 		{
-			id_brand: {
+			id_cart: {
 				type: DataTypes.INTEGER(11),
 				primaryKey: true,
 				autoIncrement: true,
 				allowNull: false,
 			},
-			name_brand: {
-				type: DataTypes.STRING(255),
+			id_user: {
+				type: DataTypes.INTEGER(11),
+				allowNull: false,
+			},
+			id_product: {
+				type: DataTypes.INTEGER(11),
+				allowNull: false,
+			},
+			quantity: {
+				type: DataTypes.INTEGER(5),
 				allowNull: false,
 			},
 			createdAt: {
@@ -30,9 +39,9 @@ export default (sequelize, DataTypes) => {
 		{
 			sequelize,
 			timestamps: true,
-			tableName: 'brands',
-			modelName: 'Brand',
+			tableName: 'carts',
+			modelName: 'Cart',
 		},
 	);
-	return Brand;
+	return Cart;
 };

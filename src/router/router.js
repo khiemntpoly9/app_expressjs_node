@@ -6,6 +6,7 @@ import cateController from '../controllers/cateController.js';
 import productController from '../controllers/productController.js';
 import brandController from '../controllers/brandController.js';
 import authController from '../controllers/authController.js';
+import favoritesController from '../controllers/favoritesController.js';
 import mailController from '../mail/mailApp.js';
 
 // Middleware
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
 
 // Định nghĩa route Product
 router.post('/product/create', authToken.manageRole, productController.createProduct);
-router.post('/product/create', productController.createProduct);
+// router.post('/product/create', productController.createProduct);
 router.put('/product/update', productController.updateProduct);
 router.delete('/product/del', productController.deleteProduct);
 router.get('/products', productController.getAllProduct);
@@ -54,6 +55,10 @@ router.put('/changerole', userController.changeRole);
 router.delete('/deleteuser', userController.deleteUser);
 // Brand
 router.get('/brands', brandController.getAllBrand);
+// Favorite
+router.post('/addfavorite', authToken.checkLogin, favoritesController.addFavorite);
+router.delete('/delfavorite', authToken.checkLogin, favoritesController.delFavorite);
+router.get('/allfavorite', authToken.checkLogin, favoritesController.getAllFavorite);
 
 // Test mail
 router.get('/mail', mailController.createAccount);
