@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-const { Favorites, Product } = db;
+const { Favorites, Product, ImgProduct } = db;
 
 const favoritesController = {
 	// Thêm yêu thích
@@ -56,6 +56,14 @@ const favoritesController = {
 		try {
 			const favorite = await Favorites.findAll({
 				where: { id_user: userId },
+				attributes: ['id_favorites'],
+				include: [
+					{
+						model: Product,
+						attributes: ['id_product', 'name_prod'],
+						include: [{ model: ImgProduct, attributes: ['img_1'] }],
+					},
+				],
 			});
 			res.status(200).json(favorite);
 		} catch (error) {

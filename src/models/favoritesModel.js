@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
 	class Favorites extends Model {
 		static associate(models) {
 			Favorites.hasMany(models.User, { foreignKey: 'id_user' });
-			Favorites.hasMany(models.Product, { foreignKey: 'id_product' });
+			Favorites.belongsTo(models.Product, { foreignKey: 'id_product' });
 		}
 	}
 	Favorites.init(
