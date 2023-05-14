@@ -114,7 +114,19 @@ const authenticateToken = {
 			req.user = decoded;
 			next();
 		} catch (error) {
-			return res.status(403).json({ message: 'Lỗi xác thực token!' });
+			return res.status(403).json({ error: 'Lỗi xác thực token!' });
+		}
+	},
+	// Check login cart
+	isLogin: async (req, res, next) => {
+		// Lấy Token
+		const token = req.cookies.access_token;
+		const isLogin = !token ? false : true;
+		try {
+			req.isLogin = isLogin;
+			next();
+		} catch (error) {
+			return res.status(403).json({ error: error });
 		}
 	},
 };

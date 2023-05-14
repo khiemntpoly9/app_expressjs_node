@@ -50,7 +50,7 @@ router.post('/checkcode', userController.checkCodeForgot);
 router.post('/changepassnew', userController.changeNewPass);
 router.put('/updateuser', userController.updateUser);
 router.put('/changepass', userController.changePassword);
-router.put('/changerole', userController.changeRole);
+router.put('/changerole', authToken.adminRole, userController.changeRole);
 router.delete('/deleteuser', userController.deleteUser);
 // Brand
 router.get('/brands', brandController.getAllBrand);
@@ -61,5 +61,11 @@ router.get('/allfavorite', authToken.checkLogin, favoritesController.getAllFavor
 
 // Test mail
 router.get('/mail', mailController.createAccount);
+
+// Cart
+router.post('/add-cart', authToken.isLogin, (req, res) => {
+	const isLogin = req.isLogin;
+	res.send({ mess: isLogin });
+});
 
 export default router;
