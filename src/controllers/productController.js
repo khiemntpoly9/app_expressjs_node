@@ -247,7 +247,7 @@ const ProductController = {
 					},
 					{
 						model: ImgProduct,
-						attributes: ['img_1', 'img_2', 'img_3', 'img_4'],
+						attributes: ['id_images', 'url'],
 					},
 					// Lấy thông tin sản phẩm
 					{
@@ -295,9 +295,10 @@ const ProductController = {
 						model: Brand,
 						attributes: ['id_brand', 'name_brand'],
 					},
+					// Lấy ảnh sản phẩm
 					{
 						model: ImgProduct,
-						attributes: ['img_1', 'img_2', 'img_3', 'img_4'],
+						attributes: ['id_images', 'url'],
 					},
 					// Lấy thông tin sản phẩm
 					{

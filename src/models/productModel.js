@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
 			// define association here
 			Product.belongsTo(models.CategoryChild, { foreignKey: 'cate_child_prod' });
 			Product.belongsTo(models.Brand, { foreignKey: 'brand_prod' });
-			Product.belongsTo(models.ImgProduct, { foreignKey: 'img_prod' });
+			Product.hasMany(models.ImgProduct, { foreignKey: 'id_product' });
 			Product.belongsTo(models.DetailProduct, { foreignKey: 'id_detail_prod' });
 			Product.belongsToMany(models.Colors, { through: models.ColorProduct, foreignKey: 'product_id' });
 			Product.belongsTo(models.Cart, { foreignKey: 'id_product' });
@@ -44,10 +44,6 @@ export default (sequelize, DataTypes) => {
 			material_prod: {
 				type: DataTypes.INTEGER(11),
 				allowNull: true,
-			},
-			img_prod: {
-				type: DataTypes.INTEGER(11),
-				allowNull: false,
 			},
 			style_prod: {
 				type: DataTypes.INTEGER(11),
