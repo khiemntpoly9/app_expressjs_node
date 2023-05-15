@@ -31,7 +31,7 @@ const authController = {
 				// Upload data
 				const user = await User.create({ first_name, last_name, phone, email, password: hashedPassword });
 				// Gửi mail khi tạo tài khoản thành công
-				mailApp.createAccount(last_name, email);
+				// mailApp.createAccount(last_name, email);
 				// End mail
 				res.status(201).json({ message: 'Tạo tài khoản thành công!' });
 			}

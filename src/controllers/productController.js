@@ -16,9 +16,10 @@ const ProductController = {
 			preserve_prod,
 			price_prod,
 			material_prod,
+			style_prod,
+			img_thumnail,
 			// Nhận 1 mảng hình
 			list_img,
-			style_prod,
 		} = req.body;
 		try {
 			// Tạo data Product detail
@@ -38,13 +39,15 @@ const ProductController = {
 				price_prod,
 				material_prod,
 				style_prod,
+				img_thumnail,
 			});
 			// Tạo data Ảnh Product
 			const id_product = product.id_product;
-			const imagesProduct = await ImgProduct.create({
+			const data_img = list_img.map((x) => ({
 				id_product: id_product,
-				url: list_img,
-			});
+				url: x,
+			}));
+			const add_image = ImgProduct.bulkCreate(data_img);
 			res.status(201).json({ message: 'Thêm sản phẩm thành công!' });
 		} catch (error) {
 			console.log(error);
@@ -54,28 +57,59 @@ const ProductController = {
 	// Sửa sản phẩm
 	updateProduct: async (req, res) => {
 		const { id } = req.query;
+		const id_product = id;
 		const {
 			name_prod,
 			cate_child_prod,
 			brand_prod,
-			id_detail_prod,
+			detail_prod,
+			description_prod,
+			specification_prod,
+			preserve_prod,
 			price_prod,
 			material_prod,
-			img_prod,
 			style_prod,
+			img_thumnail,
+			// Nhận 1 mảng hình
+			list_img,
 		} = req.body;
 		try {
+			// Lấy data liên quan
+			const product = await Product.findByPk(id_product, {
+				attributes: ['id_detail_prod'],
+			});
+			const detail_prod_id = product.dataValues.id_detail_prod;
+			// Update Product Detail
+			const productDetail = await DetailProduct.update(
+				{
+					detail_prod,
+					description_prod,
+					specification_prod,
+					preserve_prod,
+				},
+				{ where: { id_detail_main: detail_prod_id } },
+			);
+			// Xoá ảnh & thêm mới
+			const img_prod = await ImgProduct.destroy({
+				where: { id_product: id_product },
+			});
+			// Thêm lại ảnh
+			const data_img = list_img.map((x) => ({
+				id_product: id_product,
+				url: x,
+			}));
+			const add_image = ImgProduct.bulkCreate(data_img);
+			// Update sản phẩm
 			const numRows = await Product.update(
 				// UpdateAt thêm thời gian lúc update
 				{
 					name_prod,
 					cate_child_prod,
 					brand_prod,
-					id_detail_prod,
 					price_prod,
 					material_prod,
-					img_prod,
 					style_prod,
+					img_thumnail,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
 				{ returning: true, where: { id_product: id } },
@@ -99,8 +133,22 @@ const ProductController = {
 		const { id } = req.query;
 		const id_product = id;
 		try {
+			// Lấy data liên quan
+			const product = await Product.findByPk(id_product, {
+				attributes: ['id_detail_prod'],
+			});
+			// Xoá các hình liên quan
+			const img_prod = await ImgProduct.destroy({
+				where: { id_product: id_product },
+			});
+			// Xoá sản phẩm
 			const deletedRows = await Product.destroy({
 				where: { id_product },
+			});
+			const detail_prod = product.dataValues.id_detail_prod;
+			// Xoá thông tin chi tiết sản phẩm
+			const productDetail = await DetailProduct.destroy({
+				where: { id_detail_main: detail_prod },
 			});
 			if (deletedRows === 0) {
 				res.status(404).json({ message: 'Không tìm thấy sản phẩm!' });
@@ -117,7 +165,7 @@ const ProductController = {
 		try {
 			const products = await Product.findAll({
 				// Trả về dữ liệu kiểm soát
-				attributes: ['id_product', 'name_prod', 'price_prod', 'createdAt', 'updatedAt'],
+				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
 						model: CategoryChild,
@@ -170,7 +218,7 @@ const ProductController = {
 					},
 				},
 				// Trả về dữ liệu kiểm soát
-				attributes: ['id_product', 'name_prod', 'price_prod', 'createdAt', 'updatedAt'],
+				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
 						model: CategoryChild,
@@ -225,7 +273,7 @@ const ProductController = {
 					},
 				},
 				// Trả về dữ liệu kiểm soát
-				attributes: ['id_product', 'name_prod', 'price_prod', 'createdAt', 'updatedAt'],
+				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
 						model: CategoryChild,
@@ -275,7 +323,7 @@ const ProductController = {
 		try {
 			// Dùng phương thức Product.findByPk để tìm 'id' tương ứng
 			const product = await Product.findByPk(id_product, {
-				attributes: ['id_product', 'name_prod', 'price_prod', 'createdAt', 'updatedAt'],
+				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
 						model: CategoryChild,

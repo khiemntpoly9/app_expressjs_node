@@ -71,7 +71,6 @@ const authenticateToken = {
 		}
 		try {
 			const decoded = jwt.verify(token, JWT_SECRET);
-			console.log(decoded.role);
 			if (decoded.role == 'qtv' || decoded.role == 'ctv') {
 				next();
 			} else {

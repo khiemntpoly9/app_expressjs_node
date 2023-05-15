@@ -49,6 +49,14 @@ export default (sequelize, DataTypes) => {
 				type: DataTypes.INTEGER(11),
 				allowNull: true,
 			},
+			img_thumnail: {
+				type: DataTypes.STRING(255),
+				allowNull: false,
+			},
+			discount: {
+				type: DataTypes.INTEGER(11),
+				allowNull: true,
+			},
 		},
 		{
 			sequelize,
