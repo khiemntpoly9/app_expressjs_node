@@ -16,10 +16,8 @@ const ProductController = {
 			preserve_prod,
 			price_prod,
 			material_prod,
-			img_1_prod,
-			img_2_prod,
-			img_3_prod,
-			img_4_prod,
+			// Nhận 1 mảng hình
+			list_img,
 			style_prod,
 		} = req.body;
 		try {
@@ -31,14 +29,7 @@ const ProductController = {
 				preserve_prod,
 			});
 			const id_detail_prod = productDetail.id_detail_main;
-			// Tạo data Ảnh Product
-			const imagesProduct = await ImgProduct.create({
-				img_1: img_1_prod,
-				img_2: img_2_prod,
-				img_3: img_3_prod,
-				img_4: img_4_prod,
-			});
-			const img_prod = imagesProduct.id_images;
+			// Tạo sản phẩm
 			const product = await Product.create({
 				name_prod,
 				cate_child_prod,
@@ -46,8 +37,13 @@ const ProductController = {
 				id_detail_prod,
 				price_prod,
 				material_prod,
-				img_prod,
 				style_prod,
+			});
+			// Tạo data Ảnh Product
+			const id_product = product.id_product;
+			const imagesProduct = await ImgProduct.create({
+				id_product: id_product,
+				url: list_img,
 			});
 			res.status(201).json({ message: 'Thêm sản phẩm thành công!' });
 		} catch (error) {
@@ -139,7 +135,7 @@ const ProductController = {
 					},
 					{
 						model: ImgProduct,
-						attributes: ['img_1', 'img_2', 'img_3', 'img_4'],
+						attributes: ['id_images', 'url'],
 					},
 					// Lấy thông tin sản phẩm
 					{
@@ -192,7 +188,7 @@ const ProductController = {
 					},
 					{
 						model: ImgProduct,
-						attributes: ['img_1', 'img_2', 'img_3', 'img_4'],
+						attributes: ['id_images', 'url'],
 					},
 					// Lấy thông tin sản phẩm
 					{
