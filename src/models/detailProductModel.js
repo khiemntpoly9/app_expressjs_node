@@ -4,16 +4,21 @@ export default (sequelize, DataTypes) => {
 	class DetailProduct extends Model {
 		static associate(models) {
 			// define association here
-			DetailProduct.hasOne(models.Product, { foreignKey: 'id_detail_prod' });
+			DetailProduct.belongsTo(models.Product, { foreignKey: 'id_product' });
 		}
 	}
 	DetailProduct.init(
 		{
-			id_detail_main: {
+			id_detail: {
 				type: DataTypes.INTEGER(11),
 				primaryKey: true,
 				autoIncrement: true,
 				allowNull: false,
+			},
+			id_product: {
+				type: DataTypes.INTEGER(11),
+				allowNull: false,
+				unique: true,
 			},
 			detail_prod: {
 				type: DataTypes.TEXT,

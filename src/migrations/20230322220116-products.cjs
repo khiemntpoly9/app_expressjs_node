@@ -21,10 +21,6 @@ export async function up(queryInterface, Sequelize) {
 			type: Sequelize.INTEGER(11),
 			allowNull: false,
 		},
-		id_detail_prod: {
-			type: Sequelize.INTEGER(11),
-			allowNull: false,
-		},
 		price_prod: {
 			type: Sequelize.DECIMAL(10, 0),
 			allowNull: false,

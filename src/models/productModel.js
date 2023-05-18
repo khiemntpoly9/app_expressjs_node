@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
 			Product.belongsTo(models.CategoryChild, { foreignKey: 'cate_child_prod' });
 			Product.belongsTo(models.Brand, { foreignKey: 'brand_prod' });
 			Product.hasMany(models.ImgProduct, { foreignKey: 'id_product' });
-			Product.belongsTo(models.DetailProduct, { foreignKey: 'id_detail_prod' });
+			Product.hasOne(models.DetailProduct, { foreignKey: 'id_product' });
 			Product.belongsToMany(models.Colors, { through: models.ColorProduct, foreignKey: 'product_id' });
 			Product.belongsTo(models.Cart, { foreignKey: 'id_product' });
 			Product.hasMany(models.Favorites, { foreignKey: 'id_product' });
@@ -30,10 +30,6 @@ export default (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			brand_prod: {
-				type: DataTypes.INTEGER(11),
-				allowNull: false,
-			},
-			id_detail_prod: {
 				type: DataTypes.INTEGER(11),
 				allowNull: false,
 			},

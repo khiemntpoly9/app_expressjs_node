@@ -22,27 +22,27 @@ const ProductController = {
 			list_img,
 		} = req.body;
 		try {
-			// Tạo data Product detail
-			const productDetail = await DetailProduct.create({
-				detail_prod,
-				description_prod,
-				specification_prod,
-				preserve_prod,
-			});
-			const id_detail_prod = productDetail.id_detail_main;
 			// Tạo sản phẩm
 			const product = await Product.create({
 				name_prod,
 				cate_child_prod,
 				brand_prod,
-				id_detail_prod,
 				price_prod,
 				material_prod,
 				style_prod,
 				img_thumnail,
 			});
-			// Tạo data Ảnh Product
+			// Lấy id sản phẩm vừa tạo
 			const id_product = product.id_product;
+			// Tạo data Product detail
+			const productDetail = await DetailProduct.create({
+				id_product: id_product,
+				detail_prod,
+				description_prod,
+				specification_prod,
+				preserve_prod,
+			});
+			// Tạo data Ảnh Product
 			const data_img = list_img.map((x) => ({
 				id_product: id_product,
 				url: x,
@@ -74,11 +74,6 @@ const ProductController = {
 			list_img,
 		} = req.body;
 		try {
-			// Lấy data liên quan
-			const product = await Product.findByPk(id_product, {
-				attributes: ['id_detail_prod'],
-			});
-			const detail_prod_id = product.dataValues.id_detail_prod;
 			// Update Product Detail
 			const productDetail = await DetailProduct.update(
 				{
@@ -87,16 +82,16 @@ const ProductController = {
 					specification_prod,
 					preserve_prod,
 				},
-				{ where: { id_detail_main: detail_prod_id } },
+				{ where: { id_product: id_product } },
 			);
 			// Xoá ảnh & thêm mới
 			const img_prod = await ImgProduct.destroy({
 				where: { id_product: id_product },
 			});
 			// Thêm lại ảnh
-			const data_img = list_img.map((x) => ({
+			const data_img = list_img.map((item) => ({
 				id_product: id_product,
-				url: x,
+				url: item,
 			}));
 			const add_image = ImgProduct.bulkCreate(data_img);
 			// Update sản phẩm
@@ -133,10 +128,6 @@ const ProductController = {
 		const { id } = req.query;
 		const id_product = id;
 		try {
-			// Lấy data liên quan
-			const product = await Product.findByPk(id_product, {
-				attributes: ['id_detail_prod'],
-			});
 			// Xoá các hình liên quan
 			const img_prod = await ImgProduct.destroy({
 				where: { id_product: id_product },
@@ -145,10 +136,9 @@ const ProductController = {
 			const deletedRows = await Product.destroy({
 				where: { id_product },
 			});
-			const detail_prod = product.dataValues.id_detail_prod;
 			// Xoá thông tin chi tiết sản phẩm
 			const productDetail = await DetailProduct.destroy({
-				where: { id_detail_main: detail_prod },
+				where: { id_product: id_product },
 			});
 			if (deletedRows === 0) {
 				res.status(404).json({ message: 'Không tìm thấy sản phẩm!' });
@@ -193,7 +183,7 @@ const ProductController = {
 					// Lấy màu sản phẩm
 					{
 						model: Colors,
-						through: ColorProduct,
+						// through: ColorProduct,
 						attributes: ['name_color', 'hex_color'],
 					},
 				],
