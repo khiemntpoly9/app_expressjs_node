@@ -24,7 +24,6 @@ router.put('/product/update', authToken.manageRole, productController.updateProd
 router.delete('/product/del', authToken.manageRole, productController.deleteProduct);
 router.get('/products', productController.getAllProduct);
 router.get('/product', productController.getProductById);
-router.get('/product/catechild', productController.getProdByCateChildId);
 router.get('/product/cate', productController.getProdByCateId);
 router.get('/products-price', productController.filterProductPrice);
 router.get('/search-product', productController.searchProduct);

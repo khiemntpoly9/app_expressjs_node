@@ -333,43 +333,42 @@ const ProductController = {
 			res.status(500).json({ message: 'Internal Server Error' });
 		}
 	},
-	// Lấy danh sách sản phẩm theo danh mục con
-	getProdByCateChildId: async (req, res) => {
-		const { catechildid } = req.query;
-		try {
-			// Tìm danh sách sản phẩm có idCate tương ứng với idCate được truyền vào
-			const products = await Product.findAll({
-				where: {
-					cate_child_prod: catechildid,
-				},
-			});
-			if (products.length === 0) {
-				res.status(404).json({ message: 'Không tìm thấy sản phẩm ở danh mục này!' });
-				return;
-			}
-			res.status(200).json(products);
-		} catch (error) {
-			console.log(error);
-			res.status(500).json({ message: 'Internal Server Error' });
-		}
-	},
-	// Lấy danh sách sản phẩm theo danh mục mẹ
+	// Lấy danh sách sản phẩm theo danh mục
 	getProdByCateId: async (req, res) => {
 		const { cateid } = req.query;
 		try {
 			const products = await Product.findAll({
+				where: {
+					id_categories: cateid,
+				},
 				include: [
 					{
 						model: Categories,
-						attributes: ['id_categories', 'name_categories'],
+						attributes: ['id_categories', 'name_categories', 'parent_id'],
 					},
 				],
 			});
+			// Lấy sản phẩm theo danh mục mẹ
 			if (products.length === 0) {
-				res.status(404).json({ message: 'Không tìm thấy sản phẩm ở danh mục này!' });
-				return;
+				const products_p = await Product.findAll({
+					include: [
+						{
+							model: Categories,
+							where: {
+								parent_id: cateid,
+							},
+							attributes: ['id_categories', 'name_categories', 'parent_id'],
+						},
+					],
+				});
+				if (products_p.length === 0) {
+					res.status(404).json({ message: 'Không tìm thấy sản phẩm ở danh mục này!' });
+					return;
+				}
+				res.status(200).json(products_p);
+			} else {
+				res.status(200).json(products);
 			}
-			res.status(200).json(products);
 		} catch (error) {
 			console.log(error);
 			res.status(500).json({ message: 'Internal Server Error' });
