@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-const { Product, Category, CategoryChild, Brand, ImgProduct, DetailProduct, Colors, ColorProduct } = db;
+const { Product, Categories, Brand, ImgProduct, DetailProduct, Colors, ColorProduct } = db;
 import Sequelize, { Op } from 'sequelize';
 
 const ProductController = {
@@ -8,7 +8,7 @@ const ProductController = {
 		// Nhận các trường dữ liệu
 		const {
 			name_prod,
-			cate_child_prod,
+			id_categories,
 			brand_prod,
 			detail_prod,
 			description_prod,
@@ -25,7 +25,7 @@ const ProductController = {
 			// Tạo sản phẩm
 			const product = await Product.create({
 				name_prod,
-				cate_child_prod,
+				id_categories,
 				brand_prod,
 				price_prod,
 				material_prod,
@@ -60,7 +60,7 @@ const ProductController = {
 		const id_product = id;
 		const {
 			name_prod,
-			cate_child_prod,
+			id_categories,
 			brand_prod,
 			detail_prod,
 			description_prod,
@@ -99,7 +99,7 @@ const ProductController = {
 				// UpdateAt thêm thời gian lúc update
 				{
 					name_prod,
-					cate_child_prod,
+					id_categories,
 					brand_prod,
 					price_prod,
 					material_prod,
@@ -158,14 +158,8 @@ const ProductController = {
 				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-						include: [
-							{
-								model: Category,
-								attributes: ['id_category', 'name_category'],
-							},
-						],
+						model: Categories,
+						attributes: ['id_categories', 'name_categories'],
 					},
 					{
 						model: Brand,
@@ -211,14 +205,8 @@ const ProductController = {
 				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-						include: [
-							{
-								model: Category,
-								attributes: ['id_category', 'name_category'],
-							},
-						],
+						model: Categories,
+						attributes: ['id_categories', 'name_categories'],
 					},
 					{
 						model: Brand,
@@ -266,14 +254,8 @@ const ProductController = {
 				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-						include: [
-							{
-								model: Category,
-								attributes: ['id_category', 'name_category'],
-							},
-						],
+						model: Categories,
+						attributes: ['id_categories', 'name_categories'],
 					},
 					{
 						model: Brand,
@@ -316,14 +298,8 @@ const ProductController = {
 				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-						include: [
-							{
-								model: Category,
-								attributes: ['id_category', 'name_category'],
-							},
-						],
+						model: Categories,
+						attributes: ['id_categories', 'name_categories'],
 					},
 					{
 						model: Brand,
@@ -384,17 +360,8 @@ const ProductController = {
 			const products = await Product.findAll({
 				include: [
 					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-						include: [
-							{
-								model: Category,
-								// attributes: ['id_category', 'name_category'],
-								where: {
-									id_category: cateid,
-								},
-							},
-						],
+						model: Categories,
+						attributes: ['id_categories', 'name_categories'],
 					},
 				],
 			});

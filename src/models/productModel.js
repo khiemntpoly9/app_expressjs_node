@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
 	class Product extends Model {
 		static associate(models) {
 			// define association here
-			Product.belongsTo(models.CategoryChild, { foreignKey: 'cate_child_prod' });
+			Product.belongsTo(models.Categories, { foreignKey: 'id_categories' });
 			Product.belongsTo(models.Brand, { foreignKey: 'brand_prod' });
 			Product.hasMany(models.ImgProduct, { foreignKey: 'id_product' });
 			Product.hasOne(models.DetailProduct, { foreignKey: 'id_product' });
@@ -25,7 +25,7 @@ export default (sequelize, DataTypes) => {
 				type: DataTypes.STRING(255),
 				allowNull: false,
 			},
-			cate_child_prod: {
+			id_categories: {
 				type: DataTypes.INTEGER(11),
 				allowNull: false,
 			},

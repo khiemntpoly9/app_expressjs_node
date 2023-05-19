@@ -1,34 +1,34 @@
 import db from '../models/index.js';
-const { Category, CategoryChild } = db;
+const { Categories } = db;
 import Sequelize from 'sequelize';
 
 const CateController = {
 	// Thêm Category
 	createCate: async (req, res) => {
-		const { name_category } = req.body;
+		const { name_categories, parent_id } = req.body;
 		try {
-			const category = await Category.create({ name_category });
+			const categories = await Categories.create({ name_categories, parent_id });
 			res.status(201).json({ message: 'Tạo danh mục thành công!' });
 		} catch (error) {
 			console.log(error);
-			res.status(500).send('Internal Server Error');
+			res.status(500).json({ error: `${error}` });
 		}
 	},
 	// Sửa thông tin Category
 	updateCate: async (req, res) => {
 		const { idcate } = req.query;
-		const { name_category } = req.body;
+		const { name_categories, parent_id } = req.body;
 		try {
-			const numRows = await Category.update(
+			const numRows = await Categories.update(
 				// UpdateAt thêm thời gian lúc update
-				{ name_category, updatedAt: Sequelize.literal('CURRENT_TIMESTAMP') },
-				{ returning: true, where: { id_category: idcate } },
+				{ name_categories, parent_id, updatedAt: Sequelize.literal('CURRENT_TIMESTAMP') },
+				{ returning: true, where: { id_categories: idcate } },
 			);
 			if (numRows[0] === 0) {
 				res.status(404).json({ message: 'Khômg tìm thấy danh mục!' });
 				return;
 			}
-			const updatedCate = await Category.findByPk(idcate);
+			const updatedCate = await Categories.findByPk(idcate);
 			res.json({ message: 'Sửa danh mục thành công!' });
 		} catch (error) {
 			console.log(error);
@@ -39,55 +39,59 @@ const CateController = {
 	deleteCate: async (req, res) => {
 		const { idcate } = req.query;
 		try {
-			const deletedRows = await Category.destroy({
-				where: { id_category: idcate },
+			const deletedRows = await Categories.destroy({
+				where: { id_categories: idcate },
 			});
 			if (deletedRows === 0) {
 				res.status(404).json({ message: 'Không tìm thấy danh mục!' });
 				return;
 			}
-			res.status(200).send('Xoá danh mục thành công!');
+			res.status(200).json({ message: 'Xoá danh mục thành công!' });
 		} catch (error) {
 			console.log(error);
 			res.status(500).send('Internal Server Error');
 		}
 	},
-	// Lấy tất cả Category
+	// Lấy tất cả Categories
 	getAllCate: async (req, res) => {
 		try {
-			const categoris = await Category.findAll({
-				include: [
-					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-					},
-				],
-			});
-			res.status(200).json(categoris);
+			const categories = await Categories.findAll({});
+			res.status(200).json(categories);
 		} catch (error) {
 			console.log(error);
 			res.status(500).send('Internal Server Error');
 		}
 	},
-	// Lấy thông tin Category theo ID
+	// Lấy tất cả danh mục parent
+	getParentCate: async (req, res) => {
+		try {
+			const categories = await Categories.findAll({
+				where: {
+					parent_id: null,
+				},
+			});
+			res.status(200).json(categories);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send('Internal Server Error');
+		}
+	},
+	// Lấy thông tin Categories theo parent_id
 	getCateById: async (req, res) => {
 		// Param
-		const { idcate } = req.query;
+		const { parentid } = req.query;
 		try {
 			// Dùng phương thức User.findByPk để tìm 'id' tương ứng
-			const category = await Category.findByPk(idcate, {
-				include: [
-					{
-						model: CategoryChild,
-						attributes: ['id_category_child', 'name_category_child'],
-					},
-				],
+			const categories = await Categories.findAll({
+				where: {
+					parent_id: parentid,
+				},
 			});
-			if (!category) {
-				res.status(404).json({ message: 'Category not found' });
+			if (categories.length === 0) {
+				res.status(404).json({ message: 'Không tìm thấy danh mục' });
 				return;
 			}
-			res.status(200).json(category);
+			res.status(200).json(categories);
 		} catch (error) {
 			console.log(error);
 			res.status(500).send('Internal Server Error');

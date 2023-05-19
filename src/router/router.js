@@ -30,11 +30,12 @@ router.get('/products-price', productController.filterProductPrice);
 router.get('/search-product', productController.searchProduct);
 
 // Định nghĩa route Category
-router.post('/category/create', cateController.createCate);
-router.get('/categorys', cateController.getAllCate);
-router.get('/category', cateController.getCateById);
-router.put('/category/update', cateController.updateCate);
-router.delete('/category/del', cateController.deleteCate);
+router.post('/categories/create', cateController.createCate);
+router.get('/categories/all', cateController.getAllCate);
+router.get('/categories/parent', cateController.getParentCate);
+router.get('/categories/chill', cateController.getCateById);
+router.put('/categories/update', cateController.updateCate);
+router.delete('/categories/del', cateController.deleteCate);
 
 // Định nghĩa route User
 router.post('/register', authController.authRegister);
