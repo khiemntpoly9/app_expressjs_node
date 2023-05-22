@@ -155,7 +155,7 @@ const ProductController = {
 		try {
 			const products = await Product.findAll({
 				// Trả về dữ liệu kiểm soát
-				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumnail', 'createdAt', 'updatedAt'],
+				attributes: ['id_product', 'name_prod', 'price_prod', 'img_thumbnail', 'createdAt', 'updatedAt'],
 				include: [
 					{
 						model: Categories,
