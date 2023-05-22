@@ -12,4 +12,5 @@ export default {
 	freezeTableName: true,
 	// Ẩn câu lệnh Query
 	logging: false,
+	timezone: '+07:00',
 };

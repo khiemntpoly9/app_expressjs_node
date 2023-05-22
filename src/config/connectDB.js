@@ -17,6 +17,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 	// freezeTableName: true
 	// Ẩn lệnh Query
 	logging: false,
+	timezone: '+07:00',
 });
 
 const connectDB = async () => {
