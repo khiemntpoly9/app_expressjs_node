@@ -17,7 +17,7 @@ const ProductController = {
 			price_prod,
 			material_prod,
 			style_prod,
-			img_thumnail,
+			img_thumbnail,
 			// Nhận 1 mảng hình
 			list_img,
 		} = req.body;
@@ -30,7 +30,7 @@ const ProductController = {
 				price_prod,
 				material_prod,
 				style_prod,
-				img_thumnail,
+				img_thumbnail,
 			});
 			// Lấy id sản phẩm vừa tạo
 			const id_product = product.id_product;
@@ -69,7 +69,7 @@ const ProductController = {
 			price_prod,
 			material_prod,
 			style_prod,
-			img_thumnail,
+			img_thumbnail,
 			// Nhận 1 mảng hình
 			list_img,
 		} = req.body;
@@ -104,7 +104,7 @@ const ProductController = {
 					price_prod,
 					material_prod,
 					style_prod,
-					img_thumnail,
+					img_thumbnail,
 					updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
 				},
 				{ returning: true, where: { id_product: id } },

@@ -45,7 +45,7 @@ export default (sequelize, DataTypes) => {
 				type: DataTypes.INTEGER(11),
 				allowNull: true,
 			},
-			img_thumnail: {
+			img_thumbnail: {
 				type: DataTypes.STRING(255),
 				allowNull: false,
 			},
