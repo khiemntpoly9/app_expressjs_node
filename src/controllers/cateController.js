@@ -55,7 +55,12 @@ const CateController = {
 	// Lấy tất cả Categories
 	getAllCate: async (req, res) => {
 		try {
-			const categories = await Categories.findAll({});
+			const categories = await Categories.findAll({
+				include: {
+					model: Categories,
+					as: 'children',
+				},
+			});
 			res.status(200).json(categories);
 		} catch (error) {
 			console.log(error);

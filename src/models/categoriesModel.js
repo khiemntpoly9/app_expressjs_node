@@ -4,6 +4,8 @@ export default (sequelize, DataTypes) => {
 	class Categories extends Model {
 		static associate(models) {
 			Categories.hasMany(models.Categories, { foreignKey: 'parent_id' });
+			Categories.hasMany(models.Categories, { as: 'children', foreignKey: 'parent_id' });
+			Categories.belongsTo(models.Categories, { as: 'parent', foreignKey: 'parent_id' });
 		}
 	}
 	Categories.init(
