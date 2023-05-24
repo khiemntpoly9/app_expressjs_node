@@ -2,7 +2,6 @@
 
 Xin chào! 👋
 ---------
-> Đây là bản Nodejs API nâng cấp
 
 <!-- ## RUN APP -->
 
