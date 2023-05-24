@@ -1,3 +1,4 @@
+/* eslint-disable import/namespace */
 import express from 'express';
 const router = express.Router();
 

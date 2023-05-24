@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-const { Product, Categories, Brand, ImgProduct, DetailProduct, Colors, ColorProduct } = db;
+const { Product, Categories, Brand, ImgProduct, DetailProduct, Colors, ColorProduct, HistoryProduct } = db;
 import Sequelize, { Op } from 'sequelize';
 
 const ProductController = {
@@ -21,6 +21,8 @@ const ProductController = {
 			// Nhận 1 mảng hình
 			list_img,
 		} = req.body;
+		// Lấy data user
+		const { userId } = req.user;
 		try {
 			// Tạo sản phẩm
 			const product = await Product.create({
@@ -48,6 +50,14 @@ const ProductController = {
 				url: x,
 			}));
 			const add_image = ImgProduct.bulkCreate(data_img);
+			// Ghi lại giá tiền sản phẩm
+			const productH = HistoryProduct.create({
+				id_product: id_product,
+				price_prod: price_prod,
+				id_user: userId,
+				updatedAt: Sequelize.literal('CURRENT_TIMESTAMP'),
+			});
+			/*-----------------------------*/
 			res.status(201).json({ message: 'Thêm sản phẩm thành công!' });
 		} catch (error) {
 			console.log(error);

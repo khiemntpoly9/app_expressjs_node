@@ -6,6 +6,7 @@ export default (sequelize, DataTypes) => {
 			User.belongsTo(models.Role, { foreignKey: 'id_role' });
 			User.belongsTo(models.Cart, { foreignKey: 'id_user' });
 			User.belongsTo(models.Favorites, { foreignKey: 'id_user' });
+			User.hasMany(models.HistoryProduct, { foreignKey: 'id_user' });
 		}
 	}
 	User.init(

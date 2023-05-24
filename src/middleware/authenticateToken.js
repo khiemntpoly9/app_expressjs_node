@@ -62,7 +62,7 @@ const authenticateToken = {
 			}
 		}
 	},
-	// Manager Role - Cả 2 role quản lý
+	// Manager Role - Cả 2 role quản lý CTV và QTV
 	manageRole: async (req, res, next) => {
 		// Lấy token từ header của yêu cầu
 		const token = req.cookies.access_token;
@@ -72,6 +72,7 @@ const authenticateToken = {
 		try {
 			const decoded = jwt.verify(token, JWT_SECRET);
 			if (decoded.role == 'qtv' || decoded.role == 'ctv') {
+				req.user = decoded;
 				next();
 			} else {
 				return res.status(401).json({ message: 'Bạn không có quyền truy cập!' });
@@ -98,7 +99,7 @@ const authenticateToken = {
 			next();
 		} catch (error) {
 			console.log(error);
-			res.status(500).json({ message: 'Internal Server Error' });
+			return res.status(500).json({ message: 'Internal Server Error' });
 		}
 	},
 	// Check login

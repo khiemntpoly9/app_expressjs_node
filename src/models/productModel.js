@@ -11,6 +11,8 @@ export default (sequelize, DataTypes) => {
 			Product.belongsToMany(models.Colors, { through: models.ColorProduct, foreignKey: 'product_id' });
 			Product.belongsTo(models.Cart, { foreignKey: 'id_product' });
 			Product.hasMany(models.Favorites, { foreignKey: 'id_product' });
+			//
+			Product.hasMany(models.HistoryProduct, { foreignKey: 'id_product' });
 		}
 	}
 	Product.init(
